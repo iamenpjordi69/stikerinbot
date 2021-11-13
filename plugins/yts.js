@@ -1,14 +1,14 @@
 let yts = require('yt-search')
 let handler = async (m, { text, usedPrefix, command }) => {
-  if (!text) throw `contoh:\n${usedPrefix + command} belajar nodejs`
+  if (!text) throw `Example:\n${usedPrefix + command} Latest Songs`
   let results = await yts(text)
   let teks = results.all.map(v => {
     switch (v.type) {
       case 'video': return `
 *${v.title}* (${v.url})
-Durasi: ${v.timestamp}
-Diupload ${v.ago}
-${v.views} Penonton
+Duration: ${v.timestamp}
+Uploaded  ${v.ago}
+${v.views} Views
       `.trim()
       case 'channel': return `
 *${v.name}* (${v.url})
@@ -16,10 +16,10 @@ _${v.subCountLabel} (${v.subCount}) Subscriber_
 ${v.videoCount} video
 `.trim()
     }
-  }).filter(v => v).join('\n========================\n')
+  }).filter(v => v).join('\n===============================\n')
   m.reply(teks)
 }
-handler.help = ['', 'earch'].map(v => 'yts' + v + ' <pencarian>')
+handler.help = ['', 'earch'].map(v => 'yts' + v + ' <search>')
 handler.tags = ['internet']
 handler.command = /^yts(earch)?$/i
 
