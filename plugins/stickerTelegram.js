@@ -10,7 +10,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     if (!gas.ok) throw eror
 
     let json = await gas.json()
-    m.reply(`*Total stiker:* ${json.result.stickers.length}
+    m.reply(`*Total stickers:* ${json.result.stickers.length}
 *Estimated time for completion:* ${json.result.stickers.length * 1.5} seconds`.trim())
 
     for (let i = 0; i < json.result.stickers.length; i++) {
