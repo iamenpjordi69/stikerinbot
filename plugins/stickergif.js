@@ -2,7 +2,7 @@ const fs = require('fs')
 const ffmpeg = require('fluent-ffmpeg')
 
 let handler = async (m, { conn, usedPrefix, command }) => {
-    gokil = `balas media dengan perintah ${usedPrefix + command}`
+    gokil = `Reply to a media with command ${usedPrefix + command}`
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
     if (/image/.test(mime)) {
@@ -30,7 +30,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
             .toFormat('webp')
             .save(ran)
     } else if (/video/.test(mime)) {
-        if ((q.msg || q).seconds > 11) throw `_*Maksimal 10 detik! Ubah menjadi gif terlebih dahulu*_`
+        if ((q.msg || q).seconds > 11) throw `_*10 seconds max! Convert to gif first*_`
         const encmedia = m.quoted ? m.quoted.fakeObj : m
         const media = await conn.downloadAndSaveMediaMessage(encmedia)
         const ran = getRandom('.webp')
@@ -43,7 +43,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
                 console.log(`Error : ${e}`)
                 fs.unlinkSync(media)
                 tipe = media.endsWith('.mp4') ? 'video' : 'gif'
-                m.reply(`_*Gagal, pada saat mengkonversi ${tipe} ke stiker*_`)
+                m.reply(`_*Failed, at the time of converting ${tipe} ke stiker*_`)
             })
             .on('end', function () {
                 console.log('Finish')
@@ -57,9 +57,9 @@ let handler = async (m, { conn, usedPrefix, command }) => {
             .save(ran)
     } else throw gokil
 }
-handler.help = ['stiker2']
+handler.help = ['stickergif']
 handler.tags = ['sticker']
-handler.command = /^(s(t|k|tic?ker)?2)$/i
+handler.command = /^(s(t|k|tic?ker)?gif)$/i
 
 handler.disabled = true
 
