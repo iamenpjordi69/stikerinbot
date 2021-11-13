@@ -10,7 +10,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     let mime = (q.msg || q).mimetype || ''
     if (/webp/.test(mime)) {
       let img = await q.download()
-      if (!img) throw `balas stiker dengan perintah ${usedPrefix + command}`
+      if (!img) throw `Reply to sticker with command ${usedPrefix + command}`
       let imgbase64 = img.toString('base64')
       let data = await axios.post('https://salisganteng.pythonanywhere.com/api/remove-bg', {
           'api-key': 'salisheker',
@@ -23,7 +23,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       })
     } else if (/image/.test(mime)) {
       let img = await q.download()
-      if (!img) throw `balas gambar dengan perintah ${usedPrefix + command}`
+      if (!img) throw `Reply to image with command ${usedPrefix + command}`
       let imgbase64 = img.toString('base64')
       let data = await axios.post('https://salisganteng.pythonanywhere.com/api/remove-bg', {
           'api-key': 'salisheker',
@@ -36,7 +36,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       })
     } else if (args[0]) {
       if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
-      else throw 'URL tidak valid!'
+      else throw 'Invalid URL!'
     }
   } catch (e) {
     throw e
