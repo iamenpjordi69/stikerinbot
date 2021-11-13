@@ -1,5 +1,5 @@
 let fs = require('fs')
-global.owner = ['6283128734012', '6288709645535'] // Letakan nomor kamu disini
+global.owner = ['917428849575', '19715122809'] // Letakan nomor kamu disini
 global.mods = [] // Moderator?
 global.prems = JSON.parse(fs.readFileSync('./src/premium.json')) // Pengguna premium tidak memerlukan limit
 global.APIs = { // API Prefix
@@ -16,6 +16,9 @@ global.APIs = { // API Prefix
   zahir: 'https://zahirr-web.herokuapp.com',
   zekais: 'http://zekais-api.herokuapp.com',
   zeks: 'https://api.zeks.xyz',
+  LeysCoder: 'https://leyscoders-api.herokuapp.com', 
+  Dehan: 'https://dhnjing.xyz',
+  Velgrynd: 'https://velgrynd.herokuapp.com'
 }
 global.APIKeys = { // APIKey nya disini
   // 'https://website': 'apikey'
@@ -26,14 +29,16 @@ global.APIKeys = { // APIKey nya disini
   'https://pencarikode.xyz': 'pais',
   'https://api.xteam.xyz': 'apikeymu',
   'https://zahirr-web.herokuapp.com': 'zahirgans',
-  'https://api.zeks.xyz': 'apivinz',
+  'https://api.zeks.xyz': 'TJpDLutSDYzzlMF2OIa4zYeTfG4',
+  'https://leyscoders-api.herokuapp.com': 'dappakntlll',
+  'https://dhnjing.xyz': 'e2645065aaced89861b4'
 }
 
 // Sticker WM
-global.packname = '❤️'
-global.author = 'ariffb'
+global.packname = 'MilfBOT❤️'
+global.author = 'Jordi'
 
-global.wait = '_*tunggu sedang di proses...*_'
+global.wait = '_*Proecssing, Please Wait...*_'
 global.eror = '_*Server Error*_'
 global.fla = 'https://www6.flamingtext.com/net-fu/proxy_form.cgi?&imageoutput=true&script=sketch-name&doScale=true&scaleWidth=800&scaleHeight=500&fontsize=100&fillTextType=1&fillTextPattern=Warning!&text='
 
