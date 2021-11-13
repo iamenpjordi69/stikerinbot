@@ -4,7 +4,7 @@ const { sticker } = require('../lib/sticker')
 
 let handler = async (m, { conn, text, usedPrefix, command }) => {
 
-    if (!text) throw `*Perintah ini untuk mengambil stiker dari Stickerly berdasarkan pencarian*\n\nContoh penggunaan:\n${usedPrefix + command} spongebob`
+    if (!text) throw `*This command is to retrieve stickers from Stickerly based on a search*\n\nUsage examples:\n${usedPrefix + command} cheems`
 
     let res = await fetch(global.API('zeks', '/api/searchsticker', { q: text }, 'apikey'))
     if (!res.ok) throw eror
@@ -12,7 +12,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
     if (!json.status) throw json
     let hasil = json.sticker.map((v, i) => `${i + 1}. ${v}`).join('\n')
     m.reply(`*${json.title}*
-*Estimasi selesai:* ${json.sticker.length * 1.5} detik
+*Estimated time of completion:* ${json.sticker.length * 1.5} seconds
 `.trim())
 
     for (let i of json.sticker) {
@@ -20,10 +20,10 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
         await conn.sendMessage(m.chat, stiker, MessageType.sticker)
         await delay(1500)
     }
-    m.reply('_*Selesai*_')
+    m.reply('_*Finished*_')
 
 }
-handler.help = ['stikerly <pencarian>']
+handler.help = ['stickerly <search>']
 handler.tags = ['sticker']
 handler.command = /^(stic?kerly)$/i
 
