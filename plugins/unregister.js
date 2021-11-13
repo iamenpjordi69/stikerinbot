@@ -14,4 +14,3 @@ handler.command = /^unreg(ister)?$/i
 handler.register = true
 
 module.exports = handler
-
