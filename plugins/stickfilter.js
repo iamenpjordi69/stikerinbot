@@ -7,16 +7,16 @@ const effects = ['greyscale', 'invert', 'brightness', 'threshold', 'sepia', 'red
 let handler = async (m, { conn, usedPrefix, text, command }) => {
   let effect = text.trim().toLowerCase()
   if (!effects.includes(effect)) throw `
-┌─〔 Daftar Efek 〕
+┌─〔 Effects List 〕
 ${effects.map(effect => `├ ${effect}`).join('\n')}
 └────
-contoh: 
+Example: 
 ${usedPrefix + command} greyscale
 `.trim()
   let q = m.quoted ? m.quoted : m
   let mime = (q.msg || q).mimetype || ''
-  if (!mime) throw 'balas gambarnya!'
-  if (!/image\/(jpe?g|png)/.test(mime)) throw `Mime ${mime} tidak didukung`
+  if (!mime) throw 'Reply to the picture!'
+  if (!/image\/(jpe?g|png)/.test(mime)) throw `Mime ${mime} not supported`
   let img = await q.download()
   let url = await uploadImage(img)
   let apiUrl = global.API('https://some-random-api.ml/canvas/', encodeURIComponent(effect), {
@@ -32,7 +32,7 @@ ${usedPrefix + command} greyscale
   }
 }
 
-handler.help = ['stikerfilter']
+handler.help = ['stickerfilter']
 handler.tags = ['sticker']
 handler.command = /^(s(tic?ker)?filter)$/i
 
