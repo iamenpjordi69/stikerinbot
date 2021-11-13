@@ -41,4 +41,3 @@ handler.tags = ['owner']
 
 handler.command = /^simulate$/i
 module.exports = handler
-
