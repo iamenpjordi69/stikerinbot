@@ -4,9 +4,9 @@ let handler = async (m, { conn }) => {
     let mime = (q.msg || q).mimetype || ''
     if (/image/.test(mime)) {
         let img = await q.download()
-        if (!img) throw `balas gambarnya!`
+        if (!img) throw `Reply to a picture to set it as bot Profile Picture!`
         conn.updateProfilePicture(bot, img)
-        m.reply('Berhasil!')
+        m.reply('Profile Picture Set Successfully!')
     }
 }
 handler.help = ['setbotpp']
