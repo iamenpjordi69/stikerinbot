@@ -4,7 +4,7 @@ let handler = async (m, { conn, text, isROwner, isOwner, usedPrefix, command }) 
     else if (isOwner) conn.welcome = text
     global.db.data.chats[m.chat].sWelcome = text
     m.reply('Welcome set successfully\n@user (Mention)\n@subject (Group Title)\n@desc (Group Description)')
-  } else throw `uhm.. Where is the text?\n\nExample:\n${usedPrefix + command} HI @user\nWelcome to the Group *subject* \n Rules* @desc`
+  } else throw `uhm.. Where is the text?\n\nExample:\n${usedPrefix + command} HI @user\nWelcome to the Group @subject\n\n Rules* @desc`
 }
 handler.help = ['setwelcome <text]
 handler.tags = ['owner', 'group']
