@@ -4,7 +4,7 @@ let handler = async (m, { conn, text, usedPrefix }) => {
     let [_, code] = text.match(linkRegex) || []
     if (!code) throw 'Invalid WhatsApp Group Link'
     let res = await conn.acceptInvite(code)
-    m.reply(`Berhasil join grup ${res.gid}`).then(() => {
+    m.reply(`Successfully Joined the Group ${res.gid}`).then(() => {
         var jumlahHari = 86400000 * 0.5
         var now = new Date() * 1
         if (now < global.db.data.chats[res.gid].expired) global.db.data.chats[res.gid].expired += jumlahHari
