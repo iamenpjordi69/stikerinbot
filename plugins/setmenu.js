@@ -3,23 +3,23 @@ let handler = async (m, { conn, command, text }) => {
   if (type == '') {
     if (text) {
       conn.menu = text
-      conn.reply(m.chat, 'Menu berhasil diatur\n' + info, m)
+      conn.reply(m.chat, 'Menu successfully set\n' + info, m)
     } else {
       conn.menu = {}
-      conn.reply(m.chat, 'Menu direset', m)
+      conn.reply(m.chat, 'Menu reset', m)
     }
   } else {
     conn.menu = typeof conn.menu == 'object' ? conn.menu : {}
     if (text) {
       conn.menu[type] = text
-      conn.reply(m.chat, 'Menu ' + type + ' berhasil diatur\n' + info, m)
+      conn.reply(m.chat, 'Menu ' + type + ' successfully set\n' + info, m)
     } else {
       delete conn.menu[type]
-      conn.reply(m.chat, 'Menu ' + type + ' direset', m)
+      conn.reply(m.chat, 'Menu ' + type + ' reset', m)
     }
   }
 }
-handler.help = ['', 'before', 'header', 'body', 'footer', 'after'].map(v => 'setmenu' + v + ' <teks>')
+handler.help = ['', 'before', 'header', 'body', 'footer', 'after'].map(v => 'setmenu' + v + ' <text>')
 handler.tags = ['owner']
 handler.command = /^set(menu|help|\?)(before|header|body|footer|after)?$/i
 handler.owner = true
@@ -42,7 +42,7 @@ Universal:
 %exp (Current Exp)
 $maxexp (Exp To Level Up)
 %totalexp (Total Exp)
-%xp4levelup (Exp yang dibutuhkan untuk levelup)
+%xp4levelup (Exp needed for levelup)
 %limit (Limit)
 %level (level)
 %role (Role)
@@ -52,18 +52,18 @@ $maxexp (Exp To Level Up)
 %date (Tanggal)
 %time (Jam)
 %uptime (Uptime Bot)
-%rtotalreg (Jumlah User yang daftar di database)
-%totalreg (Jumlah User yang ada di database)
+%rtotalreg (Number of users registered in the database)
+%totalreg (Number of users in the database)
 %npmname
 %npmdesc
 %version
 %github
 
-Bagian Menu Header & Footer:
+Header & Footer Menu Section:
 %category (Kategori)
 
-Bagian Menu Body:
+Body Menu Section:
 %cmd (Command)
-%islimit (Jika command di limit)
-%isPremium (Jika command premium)
+%islimit (If the command is limited)
+%isPremium (If command is premium)
 `.trim()
