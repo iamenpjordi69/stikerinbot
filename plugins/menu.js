@@ -7,49 +7,50 @@ let moment = require('moment-timezone')
 const defaultMenu = {
   before: `
 ┌─〔 %me 〕
-├ Hai, %name!
+├ Hi, %name!
 │
-├ Tersisa *%limit Limit*
+├ Limit Left *%limit Limit*
 ├ Role *%role*
 ├ Level *%level (%exp / %maxexp)* [%xp4levelup]
-├ %totalexp XP secara Total
+├ %totalexp XP in Total
 │ 
-├ Tanggal: *%week %weton, %date*
-├ Tanggal Islam: *%dateIslamic*
-├ Waktu: *%time*
+├ Date: *%week , %date*
+├ Islamic Date: *%dateIslamic*
+├ Time: *%time*
 │
 ├ Uptime: *%uptime (%muptime)*
-├ Database: %rtotalreg dari %totalreg
+├ Database: %rtotalreg out of %totalreg
 ├ Github:
-├ %github
+├ github.com/iamenpjordi
 └────
 %readmore`.trimStart(),
   header: '┌─〔 %category 〕',
   body: '├ %cmd %islimit %isPremium',
   footer: '└────\n',
   after: `
-*%npmname@^%version*
-${'```%npmdesc```'}
+*MilfBOT V1.0.0*
+${'```MilfBOT```'}
 `,
 }
 let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
   let tags
   let teks = `${args[0]}`.toLowerCase()
-  let arrayMenu = ['all', 'game', 'xp', 'stiker', 'kerangajaib', 'quotes', 'admin', 'grup', 'premium', 'internet', 'anonymous', 'nulis', 'downloader', 'tools', 'fun', 'database', 'quran', 'audio', 'jadibot', 'info', 'tanpakategori', 'owner']
+  let arrayMenu = ['all', 'game', 'xp', 'sticker', 'kerangajaib', 'quotes', 'admin', 'group', 'premium', 'internet', 'anime',  'anonymous', 'nulis', 'downloader', 'tools', 'fun', 'database', 'quran', 'audio', 'jadibot', 'info', 'uncategorised', 'owner']
   if (!arrayMenu.includes(teks)) teks = '404'
   if (teks == 'all') tags = {
-    'main': 'Utama',
+    'main': 'Main',
     'game': 'Game',
     'xp': 'Exp & Limit',
-    'sticker': 'Stiker',
-    'kerang': 'Kerang Ajaib',
+    'sticker': 'Sticker',
+    'kerang': 'Magic Shell',
     'quotes': 'Quotes',
-    'admin': `Admin ${global.opts['restrict'] ? '' : '(Dinonaktifkan)'}`,
-    'group': 'Grup',
+    'admin': `Admin ${global.opts['restrict'] ? '' : '(Disabled)'}`,
+    'group': 'Group',
     'premium': 'Premium',
     'internet': 'Internet',
+    'anime': 'Anime',
     'anonymous': 'Anonymous Chat',
-    'nulis': 'MagerNulis & Logo',
+    'nulis': 'TextMaker & Logo',
     'downloader': 'Downloader',
     'tools': 'Tools',
     'fun': 'Fun',
@@ -57,10 +58,10 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     'vote': 'Voting',
     'absen': 'Absen',
     'quran': 'Al Qur\'an',
-    'audio': 'Pengubah Suara',
+    'audio': 'Voice Changer',
     'jadibot': 'Jadi Bot',
     'info': 'Info',
-    '': 'Tanpa Kategori',
+    '': 'Uncategorised',
   }
   if (teks == 'game') tags = {
     'game': 'Game'
@@ -68,8 +69,8 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
   if (teks == 'xp') tags = {
     'xp': 'Exp & Limit'
   }
-  if (teks == 'stiker') tags = {
-    'sticker': 'Stiker'
+  if (teks == 'sticker') tags = {
+    'sticker': 'Sticker'
   }
   if (teks == 'kerangajaib') tags = {
     'kerang': 'Kerang Ajaib'
@@ -78,16 +79,19 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     'quotes': 'Quotes'
   }
   if (teks == 'admin') tags = {
-    'admin': `Admin ${global.opts['restrict'] ? '' : '(Dinonaktifkan)'}`
+    'admin': `Admin ${global.opts['restrict'] ? '(Enabled)' : '(Disabled)'}`
   }
-  if (teks == 'grup') tags = {
-    'group': 'Grup'
+  if (teks == 'group') tags = {
+    'group': 'Group'
   }
   if (teks == 'premium') tags = {
     'premium': 'Premium'
   }
   if (teks == 'internet') tags = {
     'internet': 'Internet'
+  }
+  if (teks == 'anime') tags = {
+    'anime': 'Anime'
   }
   if (teks == 'anonymous') tags = {
     'anonymous': 'Anonymous Chat'
@@ -115,7 +119,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     'quran': 'Al Qur\'an'
   }
   if (teks == 'audio') tags = {
-    'audio': 'Pengubah Suara'
+    'audio': 'Voice Changer'
   }
   if (teks == 'jadibot') tags = {
     'jadibot': 'Jadi Bot'
@@ -123,8 +127,8 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
   if (teks == 'info') tags = {
     'info': 'Info'
   }
-  if (teks == 'tanpakategori') tags = {
-    '': 'Tanpa Kategori'
+  if (teks == 'uncategorised') tags = {
+    '': 'Uncategorised'
   }
   if (teks == 'owner') tags = {
     'owner': 'Owner',
@@ -140,7 +144,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     let { min, xp, max } = levelling.xpRange(level, global.multiplier)
     let name = registered ? global.db.data.users[m.sender].name : conn.getName(m.sender)
     let d = new Date(new Date + 3600000)
-    let locale = 'id'
+    let locale = 'en-US'
     // d.getTimeZoneOffset()
     // Offset -420 is 18.00
     // Offset    0 is  0.00
@@ -152,7 +156,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       month: 'long',
       year: 'numeric'
     })
-    let dateIslamic = Intl.DateTimeFormat(locale + '-TN-u-ca-islamic', {
+    let dateIslamic = Intl.DateTimeFormat(locale + 'en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -189,105 +193,109 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       return conn.relayWAMessage(conn.prepareMessageFromContent(m.chat, {
         "listMessage": {
           "title": `${ucapan()}, ${name}`.trim(),
-          "description": "© stikerin",
-          "buttonText": "Klik Disini",
+          "description": "© MilfBOT",
+          "buttonText": "MENU",
           "listType": "SINGLE_SELECT",
           "sections": [
             {
               "rows": [
                 {
-                  "title": `Semua Perintah`,
-                  "description": "",
+                  "title": `All Commands`,
+                  "description": "Gives All Commands of the BOT",
                   "rowId": `${_p}? all`
                 }, {
                   "title": "Game",
-                  "description": "",
+                  "description": "Game Related Plugins",
                   "rowId": `${_p}? game`
 
                 }, {
                   "title": "XP",
-                  "description": "",
+                  "description": "XP&Level Related Commands",
                   "rowId": `${_p}? xp`
 
                 }, {
-                  "title": "Stiker",
-                  "description": "",
-                  "rowId": `${_p}? stiker`
+                  "title": "Sticker",
+                  "description": "Sticker Related Commands",
+                  "rowId": `${_p}? sticker`
                 }, {
-                  "title": "Kerang Ajaib",
+                  "title": "Magic Shell",
                   "description": "",
                   "rowId": `${_p}? kerangajaib`
                 }, {
                   "title": "Quotes",
-                  "description": "",
+                  "description": "Commands for Quotes",
                   "rowId": `${_p}? quotes`
                 }, {
                   "title": "Admin",
-                  "description": "",
+                  "description": "Group Admin Related Commands",
                   "rowId": `${_p}? admin`
                 }, {
-                  "title": "Grup",
-                  "description": "",
-                  "rowId": `${_p}? grup`
+                  "title": "Group",
+                  "description": "Group Related Commands",
+                  "rowId": `${_p}? group`
                 }, {
                   "title": "Premium",
-                  "description": "",
+                  "description": "Only for Premium users",
                   "rowId": `${_p}? premium`
                 }, {
                   "title": "Internet",
-                  "description": "",
+                  "description": "Commands related to internet",
                   "rowId": `${_p}? internet`
                 }, {
+                  "title": "Anime",
+                  "description": "Commands related to Anime/Hentai",
+                  "rowId": `${_p}? anime`
+                }, {
                   "title": "Anonymous",
-                  "description": "",
+                  "description": "Start anonymous chat",
                   "rowId": `${_p}? anonymous`
                 }, {
                   "title": "Nulis & Logo",
-                  "description": "",
+                  "description": "Test and Logo making Commands",
                   "rowId": `${_p}? nulis`
                 }, {
                   "title": "Downloader",
-                  "description": "",
+                  "description": "Media Downloader Commands",
                   "rowId": `${_p}? downloader`
                 }, {
                   "title": "Tools",
-                  "description": "",
+                  "description": "Tools and convertors",
                   "rowId": `${_p}? tools`
                 }, {
                   "title": "Fun",
-                  "description": "",
+                  "description": "Mini games and fun commands",
                   "rowId": `${_p}? fun`
                 }, {
                   "title": "Database",
-                  "description": "",
+                  "description": "Commands to View/Update Database",
                   "rowId": `${_p}? database`
                 }, {
                   "title": "Vote & Absen",
-                  "description": "",
+                  "description": "Commands Related to Voting",
                   "rowId": `${_p}? vote`
                 }, {
                   "title": "Al-Qur\'an",
-                  "description": "",
+                  "description": "Quran etc",
                   "rowId": `${_p}? quran`
                 }, {
-                  "title": "Pengubah Suara",
-                  "description": "",
+                  "title": "Voice Changer",
+                  "description": "Lists Various VoiceChanger effects",
                   "rowId": `${_p}? audio`
                 }, {
                   "title": "Jadi Bot",
-                  "description": "",
+                  "description": "Bot Hosting Commands",
                   "rowId": `${_p}? jadibot`
                 }, {
                   "title": "Info",
-                  "description": "",
+                  "description": "Shows Bot info",
                   "rowId": `${_p}? info`
                 }, {
-                  "title": "Tanpa Kategori",
-                  "description": "",
-                  "rowId": `${_p}? tanpakategori`
+                  "title": "Uncategorised",
+                  "description": "Commands that belong to no Category",
+                  "rowId": `${_p}? uncategorised`
                 }, {
                   "title": "Owner",
-                  "description": "",
+                  "description": "Commands for Owner",
                   "rowId": `${_p}? owner`
                 }
               ]
@@ -342,7 +350,7 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
     let header = conn.menu.header || defaultMenu.header
     let body = conn.menu.body || defaultMenu.body
     let footer = conn.menu.footer || defaultMenu.footer
-    let after = conn.menu.after || (conn.user.jid == global.conn.user.jid ? '' : `Dipersembahkan oleh https://wa.me/${global.conn.user.jid.split`@`[0]}`) + defaultMenu.after
+    let after = conn.menu.after || (conn.user.jid == global.conn.user.jid ? '' : `Powered BY https://wa.me/${global.conn.user.jid.split`@`[0]}`) + defaultMenu.after
     let _text = [
       before,
       ...Object.keys(tags).map(tag => {
@@ -371,15 +379,15 @@ let handler = async (m, { conn, usedPrefix: _p, args, command }) => {
       exp: exp - min,
       maxexp: xp,
       totalexp: exp,
-      xp4levelup: max - exp <= 0 ? `Siap untuk *${_p}levelup*` : `${max - exp} XP lagi untuk levelup`,
+      xp4levelup: max - exp <= 0 ? `Ready for *${_p}levelup*` : `${max - exp} more XP for levelup`,
       github: package.homepage ? package.homepage.url || package.homepage : '[unknown github url]',
       level, limit, name, weton, week, date, dateIslamic, time, totalreg, rtotalreg, role,
       readmore: readMore
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
-    await conn.send2ButtonLoc(m.chat, await (await fetch(fla + teks)).buffer(), text.trim(), 'made with ❤️ by ariffb', 'Pemilik Bot', `${_p}owner`, 'Donasi', `${_p}donasi`, m)
+    await conn.send2ButtonLoc(m.chat, await (await fetch(fla + teks)).buffer(), text.trim(), 'Made with ❤️ by Jordi', 'Bot Owner', `${_p}owner`, 'Donate', `${_p}donate`, m)
   } catch (e) {
-    conn.reply(m.chat, 'Maaf, menu sedang error', m)
+    conn.reply(m.chat, 'Sorry,This menu has some errors', m)
     throw e
   }
 }
@@ -410,19 +418,19 @@ function clockString(ms) {
   return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
 }
 function ucapan() {
-  const time = moment.tz('Asia/Jakarta').format('HH')
-  res = "Selamat dinihari"
+  const time = moment.tz('Asia/Kolkata').format('HH')
+  res = "Good Morning ❤️"
   if (time >= 4) {
-    res = "Selamat pagi"
+    res = "Good Morning ❤️"
   }
-  if (time > 10) {
-    res = "Selamat siang"
+  if (time > 12) {
+    res = "Good Afternoon ❤️"
   }
-  if (time >= 15) {
-    res = "Selamat sore"
+  if (time >= 16) {
+    res = "Good Evening ❤️"
   }
-  if (time >= 18) {
-    res = "Selamat malam"
+  if (time >= 21) {
+    res = "Good Night ❤️"
   }
   return res
 }
