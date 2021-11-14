@@ -11,38 +11,38 @@ let handler = async (m, { conn, usedPrefix, text }) => {
 		var number = text
 	}
 
-  if(number.length > 15 || (number.length < 9 && number.length > 0)) return conn.reply(m.chat, `Maaf, Nomor yang anda masukan salah!`, m)
+  if(number.length > 15 || (number.length < 9 && number.length > 0)) return conn.reply(m.chat, `Sorry, the number you entered is wrong!`, m)
 
   if (!text && !m.quoted){
     user = m.sender
     orang = "Kamu"
   }else if(text) {
     var user = number + '@s.whatsapp.net'
-    orang = "Orang yang kamu tag"
+    orang = "The person you tagged"
   } else if(m.quoted.sender) {
     var user = m.quoted.sender
-    orang = "Orang yang kamu balas"
+    orang = "The person you replied to"
   } else if(m.mentionedJid) {
     var user = number + '@s.whatsapp.net'
-    orang = "Orang yang kamu tag"
+    orang = "The person you tagged"
   }
 
   if (typeof global.db.data.users[user] == "undefined"){
-    return m.reply("Target tidak terdaftar di dalam database!")
+    return m.reply("The target is not registered in the database!")
   }
 
   if (typeof global.db.data.users[global.db.data.users[user].pasangan] == "undefined" && global.db.data.users[user].pasangan != ""){
-    return m.reply("Target tidak terdaftar di dalam database!")
+    return m.reply("The target is not registered in the database!")
   }
 
   if (global.db.data.users[user].pasangan == "") {
-    conn.reply(m.chat, `${orang} tidak memiliki pasangan dan tidak sedang menembak siapapun\n\n*Ketik .jadian @user untuk menembak seseorang*`, m)
+    conn.reply(m.chat, `${orang} no partner and not shooting anyone\n\n*Type .jadian @user to shoot someone*`, m)
   }else if (global.db.data.users[global.db.data.users[user].pasangan].pasangan != user){
-    conn.reply(m.chat, `${orang} sedang menunggu jawaban dari @${global.db.data.users[user].pasangan.split('@')[0]} karena sedang tidak diterima atau di tolak\n\nKetik *${usedPrefix}ikhlasin* untuk mengikhlaskan!`, m,{contextInfo: {
+    conn.reply(m.chat, `${orang} waiting for an answer from @${global.db.data.users[user].pasangan.split('@')[0]} because it is not accepted or rejected\n\nType *${usedPrefix}ikhlasin* to let go!`, m,{contextInfo: {
       mentionedJid: [global.db.data.users[user].pasangan]
     }})
   }else {
-    conn.reply(m.chat, `${orang} sedang menjalani hubungan dengan @${global.db.data.users[user].pasangan.split('@')[0]} 💓💓💓`, m,{contextInfo: {
+    conn.reply(m.chat, `${orang} is in a relationship with @${global.db.data.users[user].pasangan.split('@')[0]} 💓💓💓`, m,{contextInfo: {
       mentionedJid: [global.db.data.users[user].pasangan]
     }})
   }
