@@ -1,19 +1,18 @@
 let handler = async (m, { conn, text }) => {
   conn.hartatahta = conn.hartatahta ? conn.hartatahta : {}
-  if (m.chat in conn.hartatahta) throw 'Masih ada yang sedang membuat\nTeks Harta Tahta\ndi chat ini... tunggu sampai selesai'
-  if (!text) throw `Uhm...Teksnya mana?`
+  if (m.chat in conn.hartatahta) throw 'Someone is still making\nThrone Treasure Text\nin this chat...wait for it to finish'
   else conn.hartatahta[m.chat] = true
-  m.reply('_Sedang membuat..._\n*Mohon tunggu sekitar 1 menit*')
+  m.reply('_making..._\n*Please wait*')
   try {
-    let img = await ht(text)
-    conn.sendFile(m.chat, img, 'Harta Tahta.png', '*© Nurutomo*\nMade with FFmpeg', m)
+    let img = await ht(text ? text : ':v')
+    conn.sendFile(m.chat, img, 'Harta Tahta.png', '*© MilfBOT*\nMade with FFmpeg', m)
   } finally {
     delete conn.hartatahta[m.chat]
   }
 }
-handler.help = ['tahta <teks>']
+handler.help = ['throne <text>']
 handler.tags = ['nulis']
-handler.command = /^((harta)?tahta)$/i
+handler.command = /^((treasure)?throne)$/i
 handler.limit = true
 
 module.exports = handler
@@ -39,8 +38,8 @@ function ht(text = '') {
     let format = ''
     let layers = [
       `[v:0]scale=${s}${format}[im]`,
-      textArgs('HARTA', 'black', 'white', fsize, font, '(w-text_w)/2', `(h-text_h)/2-(text_h*${lh})`, w, h) + format + '[top]',
-      textArgs('TAHTA', 'black', 'white', fsize, font, '(w-text_w)/2', `(h-text_h)/2`, w, h) + format + '[mid]',
+      textArgs('TREASURE', 'black', 'white', fsize, font, '(w-text_w)/2', `(h-text_h)/2-(text_h*${lh})`, w, h) + format + '[top]',
+      textArgs('THRONE', 'black', 'white', fsize, font, '(w-text_w)/2', `(h-text_h)/2`, w, h) + format + '[mid]',
       textArgs(text, 'black', 'white', fsize, font, '(w-text_w)/2', `(h-text_h)/2+(text_h*${lh})`, w, h) + format + '[bot]',
       '[top][mid]blend=all_mode=addition[con]',
       '[con][bot]blend=all_mode=addition[txt]',
@@ -62,15 +61,15 @@ function ht(text = '') {
     console.log(layers)
     console.log('ffmpeg', ...args)
     spawn('ffmpeg', args)
-      .on('error', reject)
-      .on('close', () => {
-        try {
-          resolve(fs.readFileSync(o))
-          fs.unlinkSync(o)
-        } catch (e) {
-          reject(e)
-        }
-      })
+    .on('error', reject)
+    .on('close', () => {
+      try {
+        resolve(fs.readFileSync(o))
+        fs.unlinkSync(o)
+      } catch (e) {
+        reject(e)
+      }
+    })
     //.stderr.on('data', a => console.log(a+''))
   })
 }
@@ -80,7 +79,7 @@ function noise(_var, depth = 4, s = 1024, freq) {
   for (let i = 0; i < depth; i++) forms.push(
     formula(
       _var,
-      freq * rand(40, 80) * (s / 2048) / s * ((i + 1) / 5),
+      freq * rand(40, 80) * (s / 2048)/ s * ((i + 1) / 5),
       rand(-Math.PI, Math.PI),
       (i + 1) / depth * 8,
       0
@@ -93,7 +92,7 @@ function formula(_var, freq, offset, amp, add) {
   return `(${add.toFixed(3)}+${amp.toFixed(4)}*sin(${offset.toFixed(6)}+2*PI*${_var}*${freq.toFixed(6)}))`
 }
 
-function textArgs(text, background, color, size, fontfile, x = '200', y = '200', w = 1024, h = 1024) {
+function textArgs(text, background, color, size, fontfile, x = '200' , y = '200', w = 1024, h = 1024) {
   return `color=${background}:s=${w}x${h},drawtext=text='${text.replace(/[\\]/g, '\\$&')}':fontfile='${fontfile.replace(/[\\]/g, '\\$&')}':x=${x}:y=${y}:fontsize=${size}:fontcolor=${color}`
 }
 
@@ -104,4 +103,3 @@ function pickRandom(list) {
 function rand(min, max, q = 0.001) {
   return Math.floor((Math.random() * (max - min)) / q) * q
 }
-
