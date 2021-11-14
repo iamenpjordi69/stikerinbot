@@ -6,14 +6,14 @@ let handler = async (m, { conn, command, args }) => {
   else chats = [m.chat]
   let isDelete = /^(delete)/i.test(command)
   let isClear = /^(clear)/i.test(command)
-  m.reply(`me${isDelete ? 'nghapus' : isClear ? 'mbersihkan' : 'mbisukan'} ${chats.length} chat ${args[0] ? args[0] : ''}`)
+  m.reply(`me${isDelete ? 'Delete' : isClear ? 'Clear' : 'Mute'} ${chats.length} chat ${args[0] ? args[0] : ''}`)
   for (let id of chats) {
     if (isDelete || isClear) await conn.modifyChat(id, (isDelete ? 'delete' : 'clear'), {
       includeStarred: false
     }).catch(console.log)
     else await conn.modifyChat(id, 'mute', -Math.floor(new Date / 1e3) * 1e3 - 1e3).catch(console.log)
   }
-  m.reply(`_*Selesai*_`)
+  m.reply(`_*Finished*_`)
 }
 handler.help = [
   'clearchat',
