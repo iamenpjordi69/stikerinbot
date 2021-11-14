@@ -13,8 +13,8 @@ let handler = async (m, { conn, usedPrefix, command }) => {
         image: imgbase64,
       }
     );
-    await conn.sendFile(m.chat, data.data.image, "", "ᵏᵒⁿᵗᵒˡᵒᵈᵒⁿ", m, false);
-  } else throw `balas foto dengan perintah ${usedPrefix + command}`;
+    await conn.sendFile(m.chat, data.data.image, "", "© MilfBOT", m, false);
+  } else throw `Reply to a photo with command ${usedPrefix + command}`;
 };
 handler.help = ["removebg", "nobg"];
 handler.tags = ["tools"];
