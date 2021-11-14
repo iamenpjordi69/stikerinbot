@@ -10,28 +10,28 @@ handler.all = async function (m) {
     let user = global.db.data.users[m.sender]
     if (new Date - user.pc < 86400000) return // setiap 24 jam sekali
     await this.sendButton(m.chat, `
-Hai, ${ucapan()}
+Hi, ${ucapan()}
 
-${user.banned ? 'kamu dibanned' : 'Ada yang bisa saya bantu?'}
-`.trim(), '© stikerin', user.banned ? 'Pemilik Bot' : 'Menu', user.banned ? ',owner' : ',?', m)
+${user.banned ? 'You are banned' : 'How may I help you?'}
+`.trim(), '© MilfBOT', user.banned ? 'Bot Owner' : 'Menu', user.banned ? ',owner' : ',?', m)
     user.pc = new Date * 1
 }
 
 module.exports = handler
 function ucapan() {
-    const time = moment.tz('Asia/Jakarta').format('HH')
-    res = "Selamat dinihari"
-    if (time >= 4) {
-        res = "Selamat pagi"
-    }
-    if (time > 10) {
-        res = "Selamat siang"
-    }
-    if (time >= 15) {
-        res = "Selamat sore"
-    }
-    if (time >= 18) {
-        res = "Selamat malam"
-    }
-    return res
+  const time = moment.tz('Asia/Kolkata').format('HH')
+  res = "Good Morning ❤️"
+  if (time >= 4) {
+    res = "Good Morning ❤️"
+  }
+  if (time > 12) {
+    res = "Good Afternoon ❤️"
+  }
+  if (time >= 16) {
+    res = "Good Evening ❤️"
+  }
+  if (time >= 21) {
+    res = "Good Night ❤️"
+  }
+  return res
 }
