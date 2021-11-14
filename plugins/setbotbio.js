@@ -1,15 +1,15 @@
 // NurNurz
 let handler = async (m, { conn, text }) => {
-  if (!text) throw `uhm.. teksnya mana?`
+  if (!text) throw `uhm.. where is the text?`
   try {
     await conn.setStatus(text)
-    m.reply('Berhasil!')
+    m.reply('Bot bio set successfully!')
   } catch (e) {
     console.log(e)
     throw `Eror`
   }
 }
-handler.help = ['setbotbio <teks>']
+handler.help = ['setbotbio <text>']
 handler.tags = ['owner']
 handler.command = /^(setbotbio)$/i
 handler.owner = true
