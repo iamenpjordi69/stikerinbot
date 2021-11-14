@@ -15,8 +15,9 @@ let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
     )
     else await conn.toggleDisappearingMessages(m.chat, 0)
 }
-handler.help = ['ephe [on]']
+handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
-handler.command = /^(ephe)$/i
+handler.admin = true
+handler.command = /^(msgdisappear)$/i
 
 module.exports = handler
