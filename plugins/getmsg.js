@@ -1,8 +1,8 @@
 let handler = async (m, { conn, command, usedPrefix, text }) => {
     let which = command.replace(/get/i, '')
-    if (!text) throw `Gunakan *${usedPrefix}list${which}* untuk melihat daftar nya`
+    if (!text) throw `Type *${usedPrefix}list${which}* to see the list of messages`
     let msgs = global.db.data.msgs
-    if (!(text in msgs)) throw `'${text}' tidak terdaftar di daftar pesan`
+    if (!(text in msgs)) throw `'${text}' not registered in message list`
     let _m = conn.serializeM(JSON.parse(JSON.stringify(msgs[text]), (_, v) => {
         if (
             v !== null &&
@@ -18,7 +18,7 @@ let handler = async (m, { conn, command, usedPrefix, text }) => {
     // m.reply(`[debug]\n${require('util').format(_m)}`)
     await _m.copyNForward(m.chat, true)
 }
-handler.help = ['vn', 'msg', 'video', 'audio', 'img', 'sticker', 'gif'].map(v => 'get' + v + ' <teks>')
+handler.help = ['vn', 'msg', 'video', 'audio', 'img', 'sticker', 'gif'].map(v => 'get' + v + ' <text>')
 handler.tags = ['database']
 handler.command = /^get(vn|msg|video|audio|img|stic?ker|gif)$/
 
