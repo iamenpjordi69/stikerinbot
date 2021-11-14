@@ -1,7 +1,7 @@
 let fetch = require("node-fetch");
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
-  if (!args[0]) throw `Pokemonnya mana?`;
+  if (!args[0]) throw `Which Pokemon stats do you want?`;
   let res = await fetch(
     API("https://some-random-api.ml", "/pokedex", { pokemon: args[0] })
   );
@@ -18,7 +18,7 @@ Weight: ${json.weight}
 Base experience: ${json.base_experience}
 Gender: ${json.gender}
 Egg groups: ${json.egg_groups}\n
-STATS
+/nSTATS
 Hp: ${json.stats.hp}
 Attack: ${json.stats.attack}
 Defense: ${json.stats.defense}
@@ -26,13 +26,13 @@ Sp atk: ${json.stats.sp_atk}
 Sp def: ${json.stats.sp_def}
 Speed: ${json.stats.speed}
 Total: ${json.stats.total}\n
-FAMILY
+/nFAMILY
 Evolution Stage: ${json.family.evolutionStage}
 Evolution Line: ${json.family.evolutionLine}\n
 DESCRIPTION
 ${json.description}
 Generation: ${json.generation}\n\n
-~fatur
+~milfbot
   `.trim();
   if (!json.error)
     await conn.sendFile(
