@@ -23,7 +23,7 @@ handler.before = async function (m) {
                 crop: false,
             })
         } else if (/video/.test(mime)) {
-            if ((q.msg || q).seconds > 11) return m.reply('Maksimal 10 detik!')
+            if ((q.msg || q).seconds > 11) return m.reply('Maximum 10sec video can be converted into sticker!')
             let img = await q.download()
             if (!img) return
             wsf = new WSF.Sticker(img, {
