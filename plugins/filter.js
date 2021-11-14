@@ -2,9 +2,9 @@ const uploadImage = require("../lib/uploadImage");
 
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   let filt = `
-balas foto dengan caption opsi di bawah ini:
+Reply to the photo with the options below:
 
-┌〔 Opsi 〕
+┌〔 Option 〕
 ├ greyscale
 ├ invert
 ├ invertgreyscale
