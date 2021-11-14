@@ -1,6 +1,6 @@
 let fetch = require("node-fetch");
 let handler = async (m, { conn }) => {
-  if (!db.data.settings.nsfw) throw "Mode NSFW tidak aktif";
+  if (!db.data.settings.nsfw) throw "NSFW mode is *OFF*";
   let res = await fetch(global.API("https://api.waifu.pics/", "/nsfw/waifu"));
   if (!res.ok) throw await `${res.status} ${res.statusText}`;
   let json = await res.json();
@@ -8,14 +8,14 @@ let handler = async (m, { conn }) => {
     conn.sendFile(
       m.chat,
       json.url,
-      "bokepkartun",
-      "sange kok sama kartun, stress...",
+      "cartoon porn",
+      "how awesome is the cartoon, stress...",
       m
     );
   else throw json;
 };
 handler.help = ["nsfwwaifu", "waifunsfw"];
-handler.tags = ["fun"];
+handler.tags = ["anime"];
 
 handler.command = /^(nsfwwaifu|waifunsfw)$/i;
 
