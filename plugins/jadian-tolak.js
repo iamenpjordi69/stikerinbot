@@ -14,11 +14,11 @@ let handler = async (m, { conn, text }) => {
     )
   }
 
-  if(!text && !m.quoted) return conn.reply(m.chat, `Masukan nomor, tag atau balas pesan target.`, m)
+  if(!text && !m.quoted) return conn.reply(m.chat, `Enter number, tag or reply to target message.`, m)
   // let exists = await conn.isOnWhatsApp(number)
   // if (exists) return conn.reply(m.chat, `*Nomor target tidak terdaftar di WhatsApp*`, m)
-  if(isNaN(number)) return conn.reply(m.chat, `Nomor yang anda masukan salah!`, m)
-  if(number.length > 15) return conn.reply(m.chat, `Format salah!`, m)
+  if(isNaN(number)) return conn.reply(m.chat, `The number you entered is wrong!`, m)
+  if(number.length > 15) return conn.reply(m.chat, `Wrong Format!`, m)
   try {
 		if(text) {
 			var user = number + '@s.whatsapp.net'
@@ -32,17 +32,17 @@ let handler = async (m, { conn, text }) => {
     let groupMetadata = m.isGroup ? await conn.groupMetadata(m.chat) : {}
     let participants = m.isGroup ? groupMetadata.participants : []
     let users = m.isGroup ? participants.find(u => u.jid == user) : {}
-    if(!users) return conn.reply(m.chat, `Target atau Nomor tidak ditemukan, mungkin sudah keluar atau bukan anggota grup ini.`, m)
-    if(user === m.sender) return conn.reply(m.chat, `Tidak bisa berpacaran dengan diri sendiri!`, m)
-    if(user === conn.user.jid) return conn.reply(m.chat, `*Tidak bisa berpacaran dengan saya t_t`, m)
+    if(!users) return conn.reply(m.chat, `Target or Number not found, may have left or not a member of this group.`, m)
+    if(user === m.sender) return conn.reply(m.chat, `Can't date myself!`, m)
+    if(user === conn.user.jid) return conn.reply(m.chat, `*Can't date myself t_t`, m)
     
     if(global.db.data.users[user].pasangan != m.sender){
-      conn.reply(m.chat,`Maaf @${user.split('@')[0]} tidak sedang menembak anda`,m,{contextInfo: {
+      conn.reply(m.chat,`Excuse me @${user.split('@')[0]} not shooting you`,m,{contextInfo: {
         mentionedJid: [user]
       }})
     }else{
       global.db.data.users[user].pasangan = ""
-      conn.reply(m.chat,`Anda baru saja menolak @${user.split('@')[0]} untuk menjadi pasangan anda!`,m,{contextInfo: {
+      conn.reply(m.chat,`You just refused @${user.split('@')[0]} to be your partner!`,m,{contextInfo: {
         mentionedJid: [user]
       }})
     }
