@@ -1,8 +1,8 @@
 const { quotes } = require('../lib/scrape')
 let handler = async (m, { command, args, usedPrefix }) => {
-    let er = `contoh:\n${usedPrefix + command} cinta
+    let er = `Example:\n${usedPrefix + command} cinta
 
-┌〔 Opsi 〕
+┌〔 Options 〕
 ├ cinta
 ├ rindu
 ├ mimpi
