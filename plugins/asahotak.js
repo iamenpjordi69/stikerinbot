@@ -5,29 +5,30 @@ let handler = async (m, { conn, usedPrefix }) => {
     conn.asahotak = conn.asahotak ? conn.asahotak : {}
     let id = m.chat
     if (id in conn.asahotak) {
-        conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.asahotak[id][0])
+        conn.reply(m.chat, 'There are still unanswered questions in this chat', conn.asahotak[id][0])
         throw false
     }
-    let src = await (await fetch('https://raw.githubusercontent.com/BochilTeam/database/master/games/asahotak.json')).json()
+    let src = await (await fetch('https://gist.githubusercontent.com/iamenpjordi6/169dcf186813a22f7159b3fe4ad02e5a/raw/brainteaser.json')).json()
     let json = src[Math.floor(Math.random() * src.length)]
     let caption = `
-${json.soal}
+${json.question}
 
-Timeout *${(timeout / 1000).toFixed(2)} detik*
-Ketik ${usedPrefix}ao untuk bantuan
+_Repy to this message with answer_
+Timeout *${(timeout / 1000).toFixed(2)} seconds*
+Type ${usedPrefix}ao for help
 Bonus: ${poin} XP
     `.trim()
     conn.asahotak[id] = [
-        await conn.sendButton(m.chat, caption, '© stikerin', 'Bantuan', '.ao', m),
+        await conn.sendButton(m.chat, caption, '© MilfBOT', 'Hint', '.ao', m),
         json, poin,
         setTimeout(async () => {
-            if (conn.asahotak[id]) await conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '© stikerin', 'Asah Otak', '.asahotak', conn.asahotak[id][0])
+            if (conn.asahotak[id]) await conn.sendButton(m.chat, `Time is up!\nThe answer is *${json.answer}*`, '© MilfBOT', 'Brain Teaser', '.brainteaser', conn.asahotak[id][0])
             delete conn.asahotak[id]
         }, timeout)
     ]
 }
-handler.help = ['asahotak']
+handler.help = ['brainteaser']
 handler.tags = ['game']
-handler.command = /^asahotak/i
+handler.command = /^brainteaser/i
 
 module.exports = handler
