@@ -1,17 +1,17 @@
 let handler = async (m, { conn, command, usedPrefix }) => {
-  if (!m.quoted) throw `balas pesan bot dengan perintah ${usedPrefix + command}`
+  if (!m.quoted) throw `Reply to BOTs messages with commands ${usedPrefix + command}`
   if (!m.quoted.fromMe) throw false
   if (!m.quoted.id) throw false
   let members = m.quoted.chat.endsWith('g.us') ? (await conn.groupMetadata(m.quoted.chat)).participants.length - 1 : m.quoted.chat.endsWith('@broadcast') ? -1 : 1
   let { reads, deliveries } = await conn.messageInfo(m.quoted.chat, m.quoted.id)
   let txt = `
-*Dibaca oleh:*
+*Read by:*
 ${reads.sort((a, b) => b.t - a.t).map(({ jid, t }) => `@${jid.split`@`[0]}\n_${formatDate(t * 1000)}_`).join('\n')}
-${members > 1 ? `${members - reads.length} tersisa` : ''}
+${members > 1 ? `${members - reads.length} left` : ''}
 
-*Terkirim ke:*
+*Delivered to:*
 ${deliveries.sort((a, b) => b.t - a.t).map(({ jid, t }) => `wa.me/${jid.split`@`[0]}\n_${formatDate(t * 1000)}_`).join('\n')}
-${members > 1 ? `${members - reads.length - deliveries.length} tersisa` : ''}
+${members > 1 ? `${members - reads.length - deliveries.length} left` : ''}
 `.trim()
   m.reply(txt, null, {
     contextInfo: {
@@ -19,10 +19,10 @@ ${members > 1 ? `${members - reads.length - deliveries.length} tersisa` : ''}
     }
   })
 }
-handler.help = ['getsider']
+handler.help = ['getseen']
 handler.tags = ['group']
 
-handler.command = /^getsider$/
+handler.command = /^getseen$/
 
 module.exports = handler
 
