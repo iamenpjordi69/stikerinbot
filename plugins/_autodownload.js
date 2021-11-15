@@ -19,7 +19,7 @@ handler.all = async function (m, { isPrems }) {
         let json = await res.json()
         await m.reply(wait)
         // m.reply(util.format(json))
-        await this.sendFile(m.chat, json.nowm, '', '© stikerin', m)
+        await this.sendFile(m.chat, json.nowm, '', '© MilfBOT', m)
     }
 
     if (/^.*cocofun/i.test(m.text)) {
@@ -28,7 +28,7 @@ handler.all = async function (m, { isPrems }) {
         let json = await res.json()
         await m.reply(wait)
         // m.reply(util.format(json))
-        await this.sendFile(m.chat, json.download, '', '© stikerin', m)
+        await this.sendFile(m.chat, json.download, '', '© MilfBOT', m)
     }
 
     if (/^.*(fb.watch|facebook.com)/i.test(m.text)) {
@@ -46,7 +46,7 @@ handler.all = async function (m, { isPrems }) {
             let json = JSON.parse(igdl)
             await m.reply(wait)
             for (let { downloadUrl, type } of json) {
-                this.sendFile(m.chat, downloadUrl, 'ig' + (type == 'image' ? '.jpg' : '.mp4'), '© stikerin', m, 0, { thumbnail: await (await fetch(downloadUrl)).buffer() })
+                this.sendFile(m.chat, downloadUrl, 'ig' + (type == 'image' ? '.jpg' : '.mp4'), '© MilfBOT', m, 0, { thumbnail: await (await fetch(downloadUrl)).buffer() })
             }
         }).catch(_ => _)
     }
@@ -58,7 +58,7 @@ handler.all = async function (m, { isPrems }) {
             if (!json.status) return m.reply(eror)
             await m.reply(wait)
             m.reply(util.format(json))
-            await this.sendFile(m.chat, json.data.url, '', '© stikerin', m)
+            await this.sendFile(m.chat, json.data.url, '', '© MilfBOT', m)
         }).catch(_ => _)
     }
 
@@ -69,7 +69,7 @@ handler.all = async function (m, { isPrems }) {
             let pesan = json.data.map((v) => `Link: ${v.url}`).join('\n------------\n')
             await m.reply(wait)
             for (let { url } of json.data) {
-                this.sendFile(m.chat, url, 'ig' + (/mp4/i.test(url) ? '.mp4' : '.jpg'), '© stikerin', m)
+                this.sendFile(m.chat, url, 'ig' + (/mp4/i.test(url) ? '.mp4' : '.jpg'), '© MilfBOT', m)
             }
         }).catch(_ => _)
     }
@@ -77,7 +77,7 @@ handler.all = async function (m, { isPrems }) {
     if (/^https?:\/\/.*youtu/i.test(m.text)) {
         let results = await yts(url)
         let vid = results.all.find(video => video.seconds < 3600)
-        if (!vid) return m.reply('Video/Audio Tidak ditemukan')
+        if (!vid) return m.reply('Video/Audio Not Found')
         let yt = false
         let usedServer = servers[0]
         for (let i in servers) {
@@ -88,18 +88,18 @@ handler.all = async function (m, { isPrems }) {
                 usedServer = server
                 break
             } catch (e) {
-                m.reply(`Server ${server} error!${servers.length >= i + 1 ? '' : '\nmencoba server lain...'}`)
+                m.reply(`Server ${server} error!${servers.length >= i + 1 ? '' : '\nTry another server...'}`)
             }
         }
         if (yt === false) return m.reply(eror)
         if (yt2 === false) return m.reply(eror)
         let { dl_link, thumb, title, filesize, filesizeF } = yt
         await this.send2ButtonLoc(m.chat, await (await fetch(thumb)).buffer(), `
-*Judul:* ${title}
-*Ukuran File Audio:* ${filesizeF}
-*Ukuran File Video:* ${yt2.filesizeF}
+*Title:* ${title}
+*Audio File Size:* ${filesizeF}
+*Video File Size:* ${yt2.filesizeF}
 *Server y2mate:* ${usedServer}
-`.trim(), '© stikerin', 'Audio', `.yta ${vid.url}`, 'Video', `.yt ${vid.url}`)
+`.trim(), '© MilfBOT', 'Audio', `.yta ${vid.url}`, 'Video', `.yt ${vid.url}`)
     }
 
 }
