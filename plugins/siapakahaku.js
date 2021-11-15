@@ -6,7 +6,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     conn.siapakahaku = conn.siapakahaku ? conn.siapakahaku : {}
     let id = m.chat
     if (id in conn.siapakahaku) {
-        conn.reply(m.chat, 'Masih ada soal belum terjawab di chat ini', conn.siapakahaku[id][0])
+        conn.reply(m.chat, 'There are still unanswered questions in this chat', conn.siapakahaku[id][0])
         throw false
     }
     let src = await (await fetch('https://gist.githubusercontent.com/iamenpjordi6/a1ba22477cc9d46e6757e5b256f0857e/raw/whoami.json')).json()
@@ -14,21 +14,21 @@ let handler = async (m, { conn, usedPrefix }) => {
     let caption = `
 ${json.soal}
 
-Timeout *${(timeout / 1000).toFixed(2)} detik*
-Ketik ${usedPrefix}who untuk bantuan
+Timeout *${(timeout / 1000).toFixed(2)} seconds*
+Type ${usedPrefix}who for help
 Bonus: ${poin} XP
 `.trim()
     conn.siapakahaku[id] = [
-        await conn.sendButton(m.chat, caption, '© stikerin', 'Bantuan', '.who'),
+        await conn.sendButton(m.chat, caption, '© MilfBOT', 'Hint', '.who'),
         json, poin,
         setTimeout(async () => {
-            if (conn.siapakahaku[id]) await conn.sendButton(m.chat, `Waktu habis!\nJawabannya adalah *${json.jawaban}*`, '© stikerin', 'Siapakah Aku', '.siapaaku')
+            if (conn.siapakahaku[id]) await conn.sendButton(m.chat, `Time is up!\nThe answer is *${json.jawaban}*`, '© MilfBOT', 'Who Am I', '.whoami')
             delete conn.siapakahaku[id]
         }, timeout)
     ]
 }
-handler.help = ['siapakahaku']
+handler.help = ['whoami']
 handler.tags = ['game']
-handler.command = /^siapa(kah)?aku/i
+handler.command = /^whoami/i
 
 module.exports = handler
