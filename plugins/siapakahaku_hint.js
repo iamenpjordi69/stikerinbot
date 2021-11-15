@@ -4,7 +4,7 @@ let handler = async (m, { conn }) => {
     if (!(id in conn.siapakahaku)) throw false
     let json = conn.siapakahaku[id][1]
     let clue = json.jawaban.replace(/[AIUEOaiueo]/g, '_')
-    conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini', conn.siapakahaku[id][0])
+    conn.reply(m.chat, '```' + clue + '```\nReply to the question, not this message', conn.siapakahaku[id][0])
 }
 handler.command = /^who$/i
 handler.limit = true
