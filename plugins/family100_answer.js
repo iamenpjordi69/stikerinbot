@@ -33,7 +33,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
 
 ${isSurrender ? '' : `+${room.winScore} XP every answer is correct`}
     `.trim()
-        await this.sendButton(m.chat, caption, '© MilfBOT', `${isWin ? 'Family 100' : isSurrender ? 'Family 100' : 'Give Up'}`, `${isWin ? ',family100' : isSurrender ? ',family100' : 'nyerah'}`, m, {
+        await this.sendButton(m.chat, caption, '© MilfBOT', `${isWin ? 'Family 100' : isSurrender ? 'Family 100' : 'GiveUP'}`, `${isWin ? ',family100' : isSurrender ? ',family100' : 'nyerah'}`, m, {
             contextInfo: {
                 mentionedJid: this.parseMention(caption)
             }
