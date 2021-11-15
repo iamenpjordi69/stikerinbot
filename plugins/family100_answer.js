@@ -7,7 +7,7 @@ module.exports = {
         if (!(id in this.game)) return !0
         let room = this.game[id]
         let text = m.text.toLowerCase().replace(/[^\w\s\-]+/, '')
-        let isSurrender = /^((me)?giveup|surr?ender)$/i.test(m.text)
+        let isSurrender = /^((me)?nyerah|surr?ender)$/i.test(m.text)
         if (!isSurrender) {
             let index = room.jawaban.findIndex(v => v.toLowerCase().replace(/[^\w\s\-]+/, '') === text)
             if (index < 0) {
@@ -33,7 +33,7 @@ ${Array.from(room.jawaban, (jawaban, index) => {
 
 ${isSurrender ? '' : `+${room.winScore} XP every answer is correct`}
     `.trim()
-        await this.sendButton(m.chat, caption, '© MilfBOT', `${isWin ? 'Family 100' : isSurrender ? 'Family 100' : 'Give Up'}`, `${isWin ? ',family100' : isSurrender ? ',family100' : 'giveup'}`, m, {
+        await this.sendButton(m.chat, caption, '© MilfBOT', `${isWin ? 'Family 100' : isSurrender ? 'Family 100' : 'Give Up'}`, `${isWin ? ',family100' : isSurrender ? ',family100' : 'nyerah'}`, m, {
             contextInfo: {
                 mentionedJid: this.parseMention(caption)
             }
