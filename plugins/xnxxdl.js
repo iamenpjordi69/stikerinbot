@@ -7,10 +7,7 @@ let handler = async (m, { conn, args }) => {
  let json = await res.json()
  let { title, high } = json.result
  m.reply(JSON.stringify(json.result, null, 2))
- for (let { low, type } of json) {
-      conn.sendFile(m.chat, low, + (type == 'image' ? '.jpg' : '.mp4'), '© MilfBOT', m)
-    }
-}
+ conn.sendFile(m.chat, high, title, '', m)
 handler.help = ['xnxxdl'].map(v => v + ' <url>')
 handler.tags = ['downloader']
 handler.command = /^xnxxdl$/i
