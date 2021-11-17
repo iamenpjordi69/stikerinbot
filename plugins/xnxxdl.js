@@ -5,13 +5,13 @@ let handler = async (m, { conn, args }) => {
  let res = await fetch(API('Velgrynd', '/api/xnxxdl', { url: args[0] }))
  if (!res.ok) throw await res.text()
  let json = await res.json()
- let { title, thumb } = json.result
+ let { title, image } = json.result
  m.reply(JSON.stringify(json.result, null, 2))
- conn.sendFile(m.chat, thumb, title, '', m)
+ conn.sendFile(m.chat, image, title, '', m)
+}
 handler.help = ['xnxxdl'].map(v => v + ' <url>')
 handler.tags = ['downloader']
 handler.command = /^xnxxdl$/i
-handler.premium = true
 
 handler.limit = true
 
