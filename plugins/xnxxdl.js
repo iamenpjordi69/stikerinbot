@@ -5,9 +5,14 @@ let handler = async (m, { conn, args }) => {
  let res = await fetch(API('Velgrynd', '/api/xnxxdl', { url: args[0] }))
  if (!res.ok) throw await res.text()
  let json = await res.json()
- let { title, low } = json.result
- m.reply(JSON.stringify(json.result, null, 2))
- conn.sendFile(m.chat, low, title, '', m)
+ let { title, image, low, high, info } = json.result
+ let xnxxinfo = `*Title:* ${title}
+ *Info:* ${info}
+ *Download:* 
+  Low: ${low}
+  High: ${high}
+//m.reply(JSON.stringify(json.result, null, 2))
+ conn.sendFile(m.chat, image, '',xnxxinfo , m)
 }
 handler.help = ['xnxxdl'].map(v => v + ' <url>')
 handler.tags = ['downloader']
