@@ -10,7 +10,7 @@ let handler = async (m, { conn, participants, command, usedPrefix }) => {
 }
 handler.help = ['match', 'jadian']
 handler.tags = ['fun']
-handler.command = /^match)|jadian$/i
+handler.command = /^match|jadian$/i
 handler.group = true
 
 module.exports = handler
