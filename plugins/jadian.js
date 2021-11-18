@@ -8,9 +8,9 @@ let handler = async (m, { conn, participants, command, usedPrefix }) => {
     let mentionedJid = [orang, jodoh]
     await conn.sendButton(m.chat, jawab, '© MilfBOT', `${command}`, usedPrefix + command, m, { contextInfo: { mentionedJid } })
 }
-handler.help = ['jodohin', 'jodohku']
+handler.help = ['match', 'jadian']
 handler.tags = ['fun']
-handler.command = /^jodoh(in|ku)|jadian$/i
+handler.command = /^match)|jadian$/i
 handler.group = true
 
 module.exports = handler
