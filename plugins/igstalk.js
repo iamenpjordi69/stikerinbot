@@ -8,8 +8,8 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   if(!json.result) throw json
   let { full_name, username, followers, following, posts_count, is_private, is_verified, biography, profile_url} = json.result
 let spotifyinfo = `🎯 *Name:* ${full_name}
-👩‍👩‍👧‍👧 *Followers:* ${following}
 👥 *Following:* ${followers}
+👩‍👩‍👧‍👧 *Followers:* ${following}
 📮 *Total Post:* ${posts_count}
 🔒 *Account Type:* ${is_private} 
 
