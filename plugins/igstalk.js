@@ -1,41 +1,15 @@
-let fetch = require('node-fetch')
-let handler = async (m, { conn, args }) => {
-  if (!args[0]) throw 'Uhm...where is the username??'
-  let res = await fetch(global.API('xteam', '/dl/igstalk', {
-    nama: args[0]
-  }, 'APIKEY'))
+const fetch = require('node-fetch')
+let handler = async (m, { conn, args, usedPrefix, command }) => {
+  if (!args[0]) throw `Example:\n${usedPrefix + command} __a_n_i_r_u_d_h_`
+
+  let res = await fetch(global.API('fxc7', '/stalk/ig', { username: args[0] }))
+  if (!res.ok) throw eror
   let json = await res.json()
-  if (res.status != 200) throw json
-  if (json.result.error) throw json.result.message
-  let {
-    full_name,
-    username,
-    is_verified,
-    media_count,
-    follower_count,
-    following_count,
-    biography,
-    external_url,
-    profile_pic_url,
-    hd_profile_pic_url_info,
-    is_private
-  } = json.result.user
-  let pp = hd_profile_pic_url_info.url || profile_pic_url
-  let caption = `
-${full_name} *(@${username})* ${is_verified ? '✓' : ''}
-https://instagram.com/${username}
-${is_private ? 'Post Hidden by User' : ('*' + media_count + '* Post(s)')}
-Following *${following_count}* User(s)
-*${follower_count}* Followers
-*Bio:*
-${biography}${external_url ? '\n*External URL:* ' + external_url : ''}
-`.trim()
-  if (pp) conn.sendFile(m.chat, pp, 'ppig.jpg', caption, m)
-  else m.reply(caption)
+  if (json.status != 200) throw json
+  conn.sendFile(m.chat, json.data.profile_url, 'eror.jpg', `*Name:* ${json.data.full_name}\n*Bio:* ${json.data.biography}\n*Followers:* ${json.data.followers}\n*Following:* ${json.data.following}\n*Posts:* ${json.data.posts_count}\n*Private:* ${json.data.is_private}\n*Verified:* ${json.data.is_verified}\n\nhttps://www.instagram.com/nsutjordi`, m, 0, { thumbnail: await (await fetch(json.data.profilehd)).buffer() })
 }
-handler.help = ['igstalk'].map(v => v + ' <username>')
-handler.tags = ['downloader']
-
+handler.help = ['igstalk <username>']
+handler.tags = ['tools']
 handler.command = /^(igstalk)$/i
-
+handler.limit = true
 module.exports = handler
