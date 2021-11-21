@@ -6,12 +6,12 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
    if (!res.ok) throw await res.text()
   let json = await res.json()
   if(!json.result) throw json
-  let { full_name, username} = json.result
+  let { full_name, username, profile_url} = json.result
 let spotifyinfo = `Name : ${full_name}
 Username : ${username}
 `
 
-  await conn.sendFile(m.chat, thumb, '', spotifyinfo, m)
+  await conn.sendFile(m.chat, profile_url, '', spotifyinfo, m)
 }  
 handler.help = ['igstalk <username>']
 handler.tags = ['tools']
