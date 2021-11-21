@@ -6,9 +6,14 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
    if (!res.ok) throw await res.text()
   let json = await res.json()
   if(!json.result) throw json
-  let { full_name, username, profile_url} = json.result
+  let { full_name, username, followers, following, posts_count, is_private, is_verified, biography, profile_url} = json.result
 let spotifyinfo = `Name : ${full_name}
-Username : ${username}
+Followers : ${followers}
+Following : ${following}
+Total Post ; ${posts_count}
+Account Type : ${is_private}
+Bio : ${biography}
+Profile URL : https://www.instagram.com//${username}
 `
 
   await conn.sendFile(m.chat, profile_url, '', spotifyinfo, m)
