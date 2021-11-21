@@ -14,7 +14,7 @@ let spotifyinfo = `🎯 *Name:* ${full_name}
 🔒 *Account Type:* ${is_private} 
 
 📜 *Bio:* ${biography}
-🔗 *Profile URL:* https://www.instagram.com//${username}
+🔗 *Profile URL:* https://www.instagram.com/${username}
 `
 
   await conn.sendFile(m.chat, profile_url, '', spotifyinfo, m)
