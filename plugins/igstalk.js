@@ -5,8 +5,9 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   let res = await fetch(global.API('fxc7', '/stalk/ig', { username: args[0] }))
   if (!res.ok) throw eror
   let json = await res.json()
+  let { full_name, biography, followers, following, posts_count, is_private, is_verified, profile_url } = json.result
   if (json.status != 200) throw json
-  conn.sendFile(m.chat, json.data.profile_url, 'eror.jpg', `*Name:* ${json.data.full_name}\n*Bio:* ${json.data.biography}\n*Followers:* ${json.data.followers}\n*Following:* ${json.data.following}\n*Posts:* ${json.data.posts_count}\n*Private:* ${json.data.is_private}\n*Verified:* ${json.data.is_verified}\n\nhttps://www.instagram.com/nsutjordi`, m, 0, { thumbnail: await (await fetch(json.data.profilehd)).buffer() })
+  conn.sendFile(m.chat, profile_url, 'eror.jpg', `*Name:* ${full_name}\n*Bio:* ${biography}\n*Followers:* ${followers}\n*Following:* ${following}\n*Posts:* ${posts_count}\n*Private:* ${is_private}\n*Verified:* ${is_verified}\n\nhttps://www.instagram.com/nsutjordi`, m, 0 )
 }
 handler.help = ['igstalk <username>']
 handler.tags = ['tools']
