@@ -37,11 +37,8 @@ global.APIKeys = { // APIKey nya disini
 }
 
 // Sticker WM
-//global.packname = 'MilfBOT❤️'
-//global.author = 'Jordi'
-
-global.packname = sticker_name
-global.author = sticker_author
+global.packname = 'MilfBOT❤️'
+global.author = 'Jordi'
 
 global.wait = '_*Proecssing, Please Wait...*_'
 global.eror = '_*Server Error*_'
