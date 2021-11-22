@@ -3,26 +3,23 @@ const { sticker } = require('../lib/sticker')
 let handler = async (m, { conn, args, usedPrefix, command }) => {
   let stiker = false
   try {
-    
-    let packname = MilfBOT❤️
-    let author = 'Jordi'
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
     if (/image/.test(mime)) {
       let img = await q.download()
       if (!img) throw `balas gambar dengan caption *${usedPrefix + command}*`
-      stiker = await sticker(img, false, packname, author)
+      stiker = await sticker(img, false, global.packname, global.author)
     } else if (/video/.test(mime)) {
       if ((q.msg || q).seconds > 11) return m.reply('Maksimal 10 detik!')
       let img = await q.download()
       if (!img) throw `balas video/gif dengan caption *${usedPrefix + command}*`
-      stiker = await sticker(img, false, packname, author)
+      stiker = await sticker(img, false, global.packname, global.author)
     } else if (/webp/.test(mime)) {
       let img = await q.download()
       if (!img) throw `balas sticker dengan caption *${usedPrefix + command}*`
-      stiker = await sticker(img, false, packname, author)
+      stiker = await sticker(img, false, global.packname, global.author)
     } else if (args[0]) {
-      if (isUrl(args[0])) stiker = await sticker(false, args[0], packname, author)
+      if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
       else return m.reply('URL tidak valid!')
     }
   } finally {
@@ -32,7 +29,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
     else throw 'Conversion failed'
   }
 }
-handler.help = ['sticker (caption|reply media)', 'sticker <url>', 'stickergif (caption|reply media)', 'stickergif <url>']
+handler.help = ['stiker (caption|reply media)', 'stiker <url>', 'stikergif (caption|reply media)', 'stikergif <url>']
 handler.tags = ['sticker']
 handler.command = /^s(tic?ker)?(gif)?(wm)?$/i
 
