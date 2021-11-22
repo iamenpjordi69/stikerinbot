@@ -4,7 +4,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   let stiker = false
   try {
     
-    let packname ='MilfBOT❤️'
+    let packname = MilfBOT❤️
     let author = 'Jordi'
     let q = m.quoted ? m.quoted : m
     let mime = (q.msg || q).mimetype || ''
