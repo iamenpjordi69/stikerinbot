@@ -13,7 +13,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       wsf = new WSF.Sticker(img, {
         pack: global.packname,
         author: global.author,
-        crop: false,
+        crop: true,
       })
     } else if (/image/.test(mime)) {
       let img = await q.download()
@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       wsf = new WSF.Sticker(img, {
         pack: global.packname,
         author: global.author,
-        crop: false,
+        crop: true,
       })
     } else if (/video/.test(mime)) {
       if ((q.msg || q).seconds > 11) throw 'Maximum 10s video can be converted to sticker!'
@@ -30,7 +30,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       wsf = new WSF.Sticker(img, {
         pack: global.packname,
         author: global.author,
-        crop: false,
+        crop: true,
       })
     } else if (args[0]) {
       if (isUrl(args[0])) stiker = await sticker(false, args[0], global.packname, global.author)
