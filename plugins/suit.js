@@ -2,31 +2,31 @@
     Made by https://github.com/syahrularranger 
     Jangan di hapus credit nya :)
 */
-let timeout = 60000
+let timeout = 120000
 let poin = 500
 let poin_lose = -100
 let handler = async (m, { conn, usedPrefix }) => {
   conn.suit = conn.suit ? conn.suit : {}
-  if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) throw 'Selesaikan suit mu yang sebelumnya'
-  if (!m.mentionedJid[0]) return m.reply(`_Siapa yang ingin kamu tantang?_\nTag orangnya.. Contoh\n\n${usedPrefix}suit @${owner[1]}`, m.chat, { contextInfo: { mentionedJid: [owner[1] + '@s.whatsapp.net'] } })
-  if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) throw `Orang yang kamu tantang sedang bermain suit bersama orang lain :(`
+  if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.sender))) throw 'Complete your previous suit'
+  if (!m.mentionedJid[0]) return m.reply(`_Who do you want to challenge?_\nTag that person.. Example\n\n${usedPrefix}suit @${owner[1]}`, m.chat, { contextInfo: { mentionedJid: [owner[1] + '@s.whatsapp.net'] } })
+  if (Object.values(conn.suit).find(room => room.id.startsWith('suit') && [room.p, room.p2].includes(m.mentionedJid[0]))) throw `The person you are challenging is playing suit with someone else :(`
   let id = 'suit_' + new Date() * 1
   let caption = `
 _*SUIT PvP*_
 
 @${m.sender.split`@`[0]} menantang @${m.mentionedJid[0].split`@`[0]} untuk bermain suit
 
-Silahkan @${m.mentionedJid[0].split`@`[0]} 
+Please @${m.mentionedJid[0].split`@`[0]} 
 `.trim()
-  let footer = `Ketik "terima/ok/gas" untuk memulai suit\nKetik "tolak/gabisa/nanti" untuk menolak`
+  let footer = `Type "accept/ok/now" to start suit\nType "reject/cannot/later" to decline`
   conn.suit[id] = {
-    chat: await conn.send2Button(m.chat, caption, footer, 'Terima', 'ok', 'Tolak', 'tolak', m, { contextInfo: { mentionedJid: conn.parseMention(caption) } }),
+    chat: await conn.send2Button(m.chat, caption, footer, 'Accept', 'ok', 'Reject', 'tolak', m, { contextInfo: { mentionedJid: conn.parseMention(caption) } }),
     id: id,
     p: m.sender,
     p2: m.mentionedJid[0],
     status: 'wait',
     waktu: setTimeout(() => {
-      if (conn.suit[id]) conn.reply(m.chat, `_Waktu suit habis_`, m)
+      if (conn.suit[id]) conn.reply(m.chat, `_Suit time out_`, m)
       delete conn.suit[id]
     }, timeout), poin, poin_lose, timeout
   }
