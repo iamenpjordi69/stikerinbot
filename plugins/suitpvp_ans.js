@@ -77,8 +77,11 @@ Scissor✂️ = wa.me/${conn.user.jid.split`@`[0]}?text=scissor
       else if (stage == stage2) tie = true
       this.reply(room.asal, `
 _*Suit Results*_${tie ? '\nSERI' : ''}
-@${room.p.split`@`[0]} (${room.text}) ${tie ? '' : room.p == win ? ` Victory \n+${room.poin}XP` : ` Lost \n-${room.poin_lose}XP`}
-@${room.p2.split`@`[0]} (${room.text2}) ${tie ? '' : room.p2 == win ? ` Victory \n+${room.poin}XP` : ` Lost \n-${room.poin_lose}XP`}
+
+
+@${room.p.split`@`[0]} (${room.text}) ${tie ? '' : room.p == win ? ` Victory 🥳🎉🎉\n+${room.poin}XP` : ` Lost 😭☹️🥲 \n-${room.poin_lose}XP`}
+
+@${room.p2.split`@`[0]} (${room.text2}) ${tie ? '' : room.p2 == win ? ` Victory 🥳🎉🎉 \n+${room.poin}XP` : ` Lost 😭☹️🥲 \n-${room.poin_lose}XP`}
 `.trim(), m, { contextInfo: { mentionedJid: [room.p, room.p2] } })
       if (!tie) {
         db.data.users[win == room.p ? room.p : room.p2].exp += room.poin
