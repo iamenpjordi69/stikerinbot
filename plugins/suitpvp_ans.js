@@ -76,7 +76,7 @@ Scissor✂️ = wa.me/${conn.user.jid.split`@`[0]}?text=scissor
       else if (k.test(stage) && g.test(stage2)) win = room.p2
       else if (stage == stage2) tie = true
       this.reply(room.asal, `
-_*Suit Results*_${tie ? '\nSERI' : ''}
+_*Suit Results*_${tie ? '\n    Its a TIE🤐🤐' : ''}
 
 
 @${room.p.split`@`[0]} (${room.text}) ${tie ? '' : room.p == win ? ` Victory 🥳🎉🎉\n+${room.poin}XP` : ` Lost 😭☹️🥲 \n-${room.poin_lose}XP`}
