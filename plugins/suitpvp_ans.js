@@ -21,14 +21,19 @@ handler.before = async function (m) {
 @${room.p2.split`@`[0]}
 
 Please choose a suit in the respective chat
-Click wa.me/${conn.user.jid.split`@`[0]}`, m.chat, {
+Click on respective links to choose:
+
+Rock🗿 = wa.me/${conn.user.jid.split`@`[0]}?text=rock
+Paper📄 = wa.me/${conn.user.jid.split`@`[0]}?text=paper
+Scissor✂️ = wa.me/${conn.user.jid.split`@`[0]}?text=scissor
+`, m.chat, {
         contextInfo: {
           mentionedJid: [room.p, room.p2]
         }
       })
 
-      if (!room.pilih) this.send3Button(room.p, 'Please select', `Win +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting', m)
-      if (!room.pilih2) this.send3Button(room.p2, 'Please select', `Win +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Batu🗿', 'Batu', 'Kertas📄', 'Kertas', 'Gunting✂️', 'Gunting', m)
+      if (!room.pilih) this.send3Button(room.p, 'Please select', `Win +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Rock🗿', 'rock', 'Paper📄', 'paper', 'Scissor✂️', 'scissor', m)
+      if (!room.pilih2) this.send3Button(room.p2, 'Please select', `Win +${room.poin}XP\nKalah -${room.poin_lose}XP`, 'Rock🗿', 'rock', 'Paper📄', 'paper', 'Scissor✂️', 'scissor', m)
       room.waktu_milih = setTimeout(() => {
         if (!room.pilih && !room.pilih2) this.reply(m.chat, `Both players have no intention of playing,\nSuit canceled`)
         else if (!room.pilih || !room.pilih2) {
@@ -43,20 +48,20 @@ Click wa.me/${conn.user.jid.split`@`[0]}`, m.chat, {
     }
     let jwb = m.sender == room.p
     let jwb2 = m.sender == room.p2
-    let g = /gunting/i
-    let b = /batu/i
-    let k = /kertas/i
-    let reg = /^(gunting|batu|kertas)/i
+    let g = /scissor/i
+    let b = /rock/i
+    let k = /paper/i
+    let reg = /^(scissor|rock|papers)/i
     if (jwb && reg.test(m.text) && !room.pilih && !m.isGroup) {
       room.pilih = reg.exec(m.text.toLowerCase())[0]
       room.text = m.text
-      m.reply(`Kamu telah memilih ${m.text} ${!room.pilih2 ? `\n\nWaiting for the opponent to choose` : ''}`)
+      m.reply(`You have chosen ${m.text} ${!room.pilih2 ? `\n\nWaiting for the opponent to choose` : ''}`)
       if (!room.pilih2) this.reply(room.p2, '_Your opponent has chosen_\nNow its your turn', 0)
     }
     if (jwb2 && reg.test(m.text) && !room.pilih2 && !m.isGroup) {
       room.pilih2 = reg.exec(m.text.toLowerCase())[0]
       room.text2 = m.text
-      m.reply(`Kamu telah memilih ${m.text} ${!room.pilih ? `\n\nWaiting for the opponent to choose` : ''}`)
+      m.reply(`You have chosen ${m.text} ${!room.pilih ? `\n\nWaiting for the opponent to choose` : ''}`)
       if (!room.pilih) this.reply(room.p, '_Your opponent has chosen_\nNow its your turn', 0)
     }
     let stage = room.pilih
