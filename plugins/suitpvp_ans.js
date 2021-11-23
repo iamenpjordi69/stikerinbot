@@ -51,7 +51,7 @@ Scissor✂️ = wa.me/${conn.user.jid.split`@`[0]}?text=scissor
     let g = /scissor/i
     let b = /rock/i
     let k = /paper/i
-    let reg = /^(scissor|rock|papers)/i
+    let reg = /^(scissor|rock|paper)/i
     if (jwb && reg.test(m.text) && !room.pilih && !m.isGroup) {
       room.pilih = reg.exec(m.text.toLowerCase())[0]
       room.text = m.text
