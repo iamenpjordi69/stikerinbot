@@ -14,7 +14,7 @@ let handler = async (m, { conn, usedPrefix }) => {
   let caption = `
 _*SUIT PvP*_
 
-@${m.sender.split`@`[0]} menantang @${m.mentionedJid[0].split`@`[0]} untuk bermain suit
+@${m.sender.split`@`[0]} challenges @${m.mentionedJid[0].split`@`[0]} to play suit
 
 Please @${m.mentionedJid[0].split`@`[0]} 
 `.trim()
