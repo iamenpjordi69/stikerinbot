@@ -2,7 +2,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     let id = m.chat
     conn.vote = conn.vote ? conn.vote : {}
     if (!(id in conn.vote)) {
-        await conn.sendButton(m.chat, `_*tidak ada voting digrup ini!*_`, '© stikerin', 'MULAI VOTE', `${usedPrefix}mulaivote`, m)
+        await conn.sendButton(m.chat, `_*No voting in this group!*_`, '© MilfBOT', 'START VOTE', `${usedPrefix}startvote`, m)
         throw false
     }
 
@@ -11,22 +11,22 @@ let handler = async (m, { conn, usedPrefix }) => {
     let caption = `
     〔 VOTE 〕
 
-*Alasan:* ${reason}
+*Reason:* ${reason}
 
-*UPVOTE*
+*UPVOTES*
 _Total: ${upvote.length}_
 ${upvote.map(u => '@' + u.split('@')[0]).join('\n')}
 
-*DEVOTE*
+*DEVOTES*
 _Total: ${devote.length}_
 ${devote.map(u => '@' + u.split('@')[0]).join('\n')}
 
-_by ariffb_
+_by Jordi_
     `.trim()
-    await conn.send3Button(m.chat, caption, '© stikerin', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, 'HAPUS VOTE', `${usedPrefix}hapusvote`, m, { contextInfo: { mentionedJid } })
+    await conn.send3Button(m.chat, caption, '© MilfBOT', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, 'DELETE VOTE', `${usedPrefix}deletevote`, m, { contextInfo: { mentionedJid } })
 }
-handler.help = ['cekvote']
+handler.help = ['checkvote']
 handler.tags = ['vote']
-handler.command = /^cekvote$/i
+handler.command = /^checkvote$/i
 handler.group = true
 module.exports = handler
