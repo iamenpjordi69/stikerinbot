@@ -24,9 +24,9 @@ let handler = async (m, { conn }) => {
     conn.reply(m.chat,`You don't have a partner.`,m)
   }
 }
-handler.help = ['putus']
+handler.help = ['breakup']
 handler.tags = ['jadian']
-handler.command = /^(putus)$/i
+handler.command = /^(breakup)$/i
 handler.group = true
 handler.fail = null
 module.exports = handler
