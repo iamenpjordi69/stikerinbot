@@ -2,12 +2,12 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     let id = m.chat
     conn.vote = conn.vote ? conn.vote : {}
     if (!(id in conn.vote)) {
-        await conn.sendButton(m.chat, `_*tidak ada voting digrup ini!*_`, '© stikerin', 'MULAI VOTE', `${usedPrefix}mulaivote`, m)
+        await conn.sendButton(m.chat, `_*No voting in this group!!*_`, '© MilfBOT', 'START VOTE', `${usedPrefix}startvote`, m)
         throw false
     }
     let isVote = conn.vote[id][1].concat(conn.vote[id][2])
     const wasVote = isVote.includes(m.sender)
-    if (wasVote) throw 'Kamu sudah vote!'
+    if (wasVote) throw 'You have already voted!'
     if (/up/i.test(command)) {
         conn.vote[id][1].push(m.sender)
     } else if (/de/i.test(command)) {
@@ -18,19 +18,19 @@ let handler = async (m, { conn, usedPrefix, command }) => {
     let caption = `
     〔 VOTE 〕
 
-*Alasan:* ${reason}
+*Reason:* ${reason}
 
-*UPVOTE*
+*UPVOTES*
 _Total: ${upvote.length}_
 ${upvote.map(u => '@' + u.split('@')[0]).join('\n')}
 
-*DEVOTE*
+*DEVOTES*
 _Total: ${devote.length}_
 ${devote.map(u => '@' + u.split('@')[0]).join('\n')}
 
-_by ariffb_
+_by Jordi_
     `.trim()
-    await conn.send2Button(m.chat, caption, '© stikerin', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, m, { contextInfo: { mentionedJid } })
+    await conn.send2Button(m.chat, caption, '© MilfBOT', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, m, { contextInfo: { mentionedJid } })
 }
 handler.help = ['upvote', 'devote']
 handler.tags = ['vote']
