@@ -2,22 +2,24 @@ let handler = async (m, { conn, text, usedPrefix }) => {
     conn.vote = conn.vote ? conn.vote : {}
     let id = m.chat
     if (id in conn.vote) {
-        await conn.sendButton(m.chat, '_Masih ada vote di chat ini!_', '© stikerin', 'HAPUS VOTE', `${usedPrefix}hapusvote`, m)
+        await conn.sendButton(m.chat, '_There is already voting going on in this chat!_', '© MilfBOT', 'END VOTING', `${usedPrefix}endvote`, m)
         throw false
     }
-    await conn.send2Button(m.chat, `Vote dimulai!
+    await conn.send2Button(m.chat, `   〔 VOTING STARTED 〕
+    
+*Reason:* ${text}
 
-*${usedPrefix}upvote* - untuk ya
-*${usedPrefix}devote* - untuk tidak
-*${usedPrefix}cekvote* - untuk mengecek vote
-*${usedPrefix}hapusvote* - untuk menghapus vote`, '© stikerin', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, m)
+*${usedPrefix}upvote* - in support
+*${usedPrefix}devote* - in against
+*${usedPrefix}checkvote* - to check number of vote
+*${usedPrefix}endvote* - to end voting`, '© MilfBOT', 'UPVOTE', `${usedPrefix}upvote`, 'DEVOTE', `${usedPrefix}devote`, m)
     conn.vote[id] = [
         text,
         [],
         []
     ]
 }
-handler.help = ['mulaivote [alasan]']
+handler.help = ['startvote [reason]']
 handler.tags = ['vote']
 handler.command = /^(start|mulai)vote$/i
 handler.limit = true
