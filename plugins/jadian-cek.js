@@ -36,7 +36,7 @@ let handler = async (m, { conn, usedPrefix, text }) => {
   }
 
   if (global.db.data.users[user].pasangan == "") {
-    conn.reply(m.chat, `${orang} has no partner and not shooting anyone\n\n*Type .jadian @user to shoot someone*`, m)
+    conn.reply(m.chat, `${orang} has no partner and not shooting anyone\n\n*Type .shoot @user to shoot someone*`, m)
   }else if (global.db.data.users[global.db.data.users[user].pasangan].pasangan != user){
     conn.reply(m.chat, `${orang} waiting for an answer from @${global.db.data.users[user].pasangan.split('@')[0]} because it is not accepted or rejected\n\nType *${usedPrefix}sincere* to let go!`, m,{contextInfo: {
       mentionedJid: [global.db.data.users[user].pasangan]
