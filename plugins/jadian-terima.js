@@ -42,15 +42,15 @@ let handler = async (m, { conn, text }) => {
       }})
     }else{
       global.db.data.users[m.sender].pasangan = user
-      conn.reply(m.chat,`Congratulations, you are officially dating @${user.split('@')[0]}\n\nMay it last forever and always be happy @${user.split('@')[0]} 💓 @${m.sender.split('@')[0]} 🥳🥳🥳`,m,{contextInfo: {
+      conn.reply(m.chat,`Congratulations, you are officially dating @${user.split('@')[0]}\n\nMay it last forever and always be happy @${user.split('@')[0]} 💓 @${m.sender.split('@')[0]} \n🥳🥳🥳`,m,{contextInfo: {
         mentionedJid: [m.sender,user]
       }})
     }
 	}	
 }
-handler.help = ['terima @tag']
+handler.help = ['accept @tag']
 handler.tags = ['jadian']
-handler.command = /^(terima)$/i
+handler.command = /^(accept)$/i
 handler.group = true
 handler.limit = false
 handler.fail = null
