@@ -45,7 +45,7 @@ let handler = async (m, { conn, usedPrefix, text }) => {
     if (typeof global.db.data.users[user] == "undefined") return m.reply("_*The person you tagged is not registered in the database.*_")
     
     if(global.db.data.users[m.sender].pasangan != "" && global.db.data.users[global.db.data.users[m.sender].pasangan].pasangan == m.sender && global.db.data.users[m.sender].pasangan != user){
-      conn.reply(m.chat,`You're already dating @${global.db.data.users[m.sender].pasangan.split('@')[0]}\n\nPlease break up first (type .putus to disconnect) to shoot @${user.split('@')[0]}\n\nBtw yang setia dikit banget!`,m,{contextInfo: {
+      conn.reply(m.chat,`You're already dating @${global.db.data.users[m.sender].pasangan.split('@')[0]}\n\nPlease break up first (type .breakup to breakup) to shoot @${user.split('@')[0]}\n\nBtw very less loyal!`,m,{contextInfo: {
         mentionedJid: [user,global.db.data.users[m.sender].pasangan]
       }})
     }else if(global.db.data.users[user].pasangan != ""){
@@ -59,7 +59,7 @@ let handler = async (m, { conn, usedPrefix, text }) => {
         }})
       }else{
         global.db.data.users[m.sender].pasangan = user
-        conn.reply(m.chat,`You just invited @${user.split('@')[0]} for dating\n\nPlease wait for his answer!\n\nType *${usedPrefix}terima @user* for accepting\n*${usedPrefix}tolak @user to refuse*`,m,{contextInfo: {
+        conn.reply(m.chat,`You just invited @${user.split('@')[0]} for dating\n\nPlease wait for his answer!\n\nType *${usedPrefix}accept @user* for accepting\n*${usedPrefix}reject @user to refuse*`,m,{contextInfo: {
           mentionedJid: [user]
         }})
       }
@@ -70,15 +70,15 @@ let handler = async (m, { conn, usedPrefix, text }) => {
       }})
     }else {
       global.db.data.users[m.sender].pasangan = user
-      conn.reply(m.chat,`You just invited @${user.split('@')[0]} for dating\n\nPlease wait for his answer!\n\nType *${usedPrefix}terima @user* to accept\n*${usedPrefix}tolak @user to refuse*`,m,{contextInfo: {
+      conn.reply(m.chat,`You just invited @${user.split('@')[0]} for dating\n\nPlease wait for his answer!\n\nType *${usedPrefix}accept @user* to accept\n*${usedPrefix}reject @user to reject*`,m,{contextInfo: {
         mentionedJid: [user]
       }})
     }
 	}	
 }
-handler.help = ['tembak @tag']
+handler.help = ['shoot @tag']
 handler.tags = ['jadian']
-handler.command = /^(tembak)$/i
+handler.command = /^(shoot)$/i
 handler.group = true
 handler.limit = false
 handler.fail = null
