@@ -48,9 +48,9 @@ let handler = async (m, { conn, text }) => {
     }
 	}	
 }
-handler.help = ['refuse @tag']
+handler.help = ['reject @tag']
 handler.tags = ['jadian']
-handler.command = /^(refuse)$/i
+handler.command = /^(reject)$/i
 handler.mods = false
 handler.premium = false
 handler.group = true
