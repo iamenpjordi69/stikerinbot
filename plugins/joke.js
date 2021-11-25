@@ -1,14 +1,15 @@
-let fetch = require('node-fetch')
+let fetch = require("node-fetch");
+let handler = async (m, {}) => {
+  let res = await fetch(
+    global.API("https://some-random-api.ml", "/joke", {}, "")
+  );
+  if (!res.ok) throw `${res.status} ${res.statusText}`;
+  let json = await res.json();
+  if (json.joke) m.reply(json.joke);
+  else throw json;
+};
+handler.help = ["joke", "jokes"];
+handler.tags = ["fun"];
+handler.command = /^(joke|jokes)$/i;
 
-let handler = async (m, { conn, text }) => {
-let res = await fetch('https://gist.githubusercontent.com/iamenpjordi6/398997898e008d0c622332482d1397c8/raw/joke.json')
-if (!res.ok) throw await `${res.status} ${res.statusText}`;
-let json = await res.json();
-let url = json[Math.floor(Math.random() * json.length)]
-await conn.sendButtonImg(m.chat, await (await fetch(url)).buffer(), 'Joke', '© MilfBOT', 'Get Again', '/joke', m)
-}
-handler.command = /^(joke)$/i
-handler.tags = ['fun']
-handler.help = ['joke']
-handler.nsfw = true
-module.exports = handler
+module.exports = handler;
