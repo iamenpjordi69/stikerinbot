@@ -1,13 +1,15 @@
 const uploadImage = require('../lib/uploadImage')
-let handler = async (m, { conn, command, text}) => {
+let handler = async (m) => {
   let q = m.quoted ? m.quoted : m
- 
-  if (!text) throw 'Send some text to make its video!'
-  await conn.sendFile(m.chat, global.API('xteam', '/videomaker/',+command {text}, 'APIKEY'), 'command.mp4', '', m)
+  let mime = (q.msg || q).mimetype || ''
+  if (!mime) throw 'Reply to a picture!'
+  let media = await q.download()
+  let url = await uploadImage(media)
+  await conn.sendFile(m.chat, global.API('xteam', '/videomaker/shaunthesheep', {url}, 'APIKEY'), 'shaunthesheep.mp4', '', m)
 }
-handler.help = ['retro']
+handler.help = ['shaunthesheep']
 handler.tags = ['nulis']
 
-handler.command = /^retro$/i
+handler.command = /^shaunthesheep$/i
 
 module.exports = handler
