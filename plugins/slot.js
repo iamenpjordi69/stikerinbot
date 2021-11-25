@@ -46,8 +46,8 @@ means you bet 100 XP.
         end = `JACKPOT! 🥳 *+${taruhan + taruhan} XP*`
         users.exp += taruhan
     } else if (a == b || a == c || b == c) {
-        end = `Less fortunate 👍 *+${Math.floor(taruhan)} XP*`
-        users.exp += Math.floor(taruhan)
+        end = `Less fortunate 👍 *+${Math.floor(taruhan/2)} XP*`
+        users.exp += Math.floor(taruhan/2)
     } else {
         end = `You lose😥 *-${taruhan} XP*`
         users.exp -= taruhan
