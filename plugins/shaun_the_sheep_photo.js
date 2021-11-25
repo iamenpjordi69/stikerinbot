@@ -8,7 +8,7 @@ let handler = async (m) => {
   await conn.sendFile(m.chat, global.API('xteam', '/videomaker/shaunthesheep', { url }, 'APIKEY'), 'shaunthesheep.mp4', '', m)
 }
 handler.help = ['shaunthesheep']
-handler.tags = ['videomaker']
+handler.tags = ['nulis']
 
 handler.command = /^shaunthesheep$/i
 
