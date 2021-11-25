@@ -23,6 +23,6 @@ let handler = async (m, { conn, command }) => {
 }
 handler.help = ["hug", "pat", "bonk", "lick", "slap", "bully", "kiss"]
 handler.tags = ["anime"]
-handler.command = /^(hug|pat|punch|lick|slap|bully|kiss)$/i
+handler.command = /^(hug|pat|punch|lick|slap|bully|kiss|kill|wink|poke)$/i
 
 module.exports = handler
