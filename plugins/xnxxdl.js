@@ -12,7 +12,7 @@ let handler = async (m, { conn, args }) => {
   Low: ${low}
   High: ${high}
 //m.reply(JSON.stringify(json.result, null, 2))
- conn.sendFile(m.chat, ${low} , 'xnxx.mp4', '', m)
+ conn.sendFile(m.chat, low , 'xnxx.mp4', '', m)
 }
 handler.help = ['xnxxdl'].map(v => v + ' <url>')
 handler.tags = ['downloader']
