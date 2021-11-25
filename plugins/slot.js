@@ -6,8 +6,8 @@ ${usedPrefix + command} 100
 means you bet 100 XP.
 
 *JACKPOT:* your bet is doubled
-*Lucky:* +5 XP
-*Lose:* your bet is taken`.trim()
+*Lucky:* +50% of your Bet
+*Lose:* +50% of your Bet is taken`.trim()
     if (!args[0]) throw fa
     if (isNaN(args[0])) throw fa
     let taruhan = parseInt(args[0])
@@ -49,8 +49,8 @@ means you bet 100 XP.
         end = `Less fortunate 👍 *+${Math.floor(taruhan/2)} XP*`
         users.exp += Math.floor(taruhan/2)
     } else {
-        end = `You lose😥 *-${taruhan} XP*`
-        users.exp -= taruhan
+        end = `You lose😥 *-${Math.floor(taruhan/2)} XP*`
+        users.exp -= Math.floor(taruhan/2)
     }
     users.lastslot = new Date * 1
     return await conn.sendButton(m.chat,
