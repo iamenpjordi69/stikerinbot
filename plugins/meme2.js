@@ -8,9 +8,9 @@ let handler = async (m, { conn }) => {
   conn.sendFile(m.chat, json.image, 'meme.png', json.caption, m, 0, { thumbnail })
 }
 
-handler.help = ['meme']
+handler.help = ['meme2']
 handler.tags = ['internet']
 
-handler.command = /^(meme)$/i
+handler.command = /^(meme2)$/i
 
 module.exports = handler
