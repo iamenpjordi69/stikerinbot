@@ -10,33 +10,26 @@ let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, 
         }
     }
     let isClose = {
-		'open': false,
-		'buka': false,
-		'on': false,
-		'1': false,
-		'close': true,
-		'tutup': true,
-		'off': true,
-		'0': true,
+		'close': 0,
+		'off': 0,
+		'0': 0,
+		'open': 7 * 24 * 60 * 60,
+		'on': 7 * 24 * 60 * 60,
+		'1': 7 * 24 * 60 * 60,
 	}[(args[0] || '')]
 	if (isClose === undefined) {`
 \nExample:
 ${usedPrefix + command} on
 ${usedPrefix + command} off
-	`.trim(), '© MilfBOT', 'ON', ',ephe 1', 'OFF', ',ephe 0')
+	`.trim(), '© MilfBOT', 'ON', ',msgdisappear 1', 'OFF', ',msgdisappear 0')
 		throw false
 	}
-    if (isClose == '0') await conn.toggleDisappearingMessages(m.chat, isClose)
-	
-    if (isClose == '1') await conn.toggleDisappearingMessages(
-        m.chat,
-        7 * 24 * 60 * 60
-    )
-    //if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
+     	await conn.toggleDisappearingMessages(m.chat, isClose)
+   
 }
 handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
 handler.admin = true
-handler.command = /^(msgdisappear|ephe)$/i
+handler.command = /^(msgdisappear)$/i
 
 module.exports = handler
