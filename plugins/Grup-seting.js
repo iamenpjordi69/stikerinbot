@@ -11,7 +11,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
 		'0': true,
 	}[(args[0] || '')]
 	if (isClose === undefined) {
-		await conn.send2Button(m.chat, `
+		await conn.send2Button(m.chat, ` Use this Command to turn ON/OFF group
 Example:
 ${usedPrefix + command} close
 ${usedPrefix + command} open
