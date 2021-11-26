@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
+let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, isOwner }) => {
     if (m.isGroup) {
         if (!isBotAdmin) {
             global.dfail('botAdmin', m, conn)
@@ -12,8 +12,8 @@ let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
     if (args[0] === undefined) {
 		await conn.send2Button(m.chat, ` Turn ON/OFF Disappearing Message
 \nExample:
-.msgdisappear on
-.msgdisappear off
+${usedPrefix + command} on
+${usedPrefix + command} off
 	`.trim(), '© MilfBOT', 'ON', ',msgdisappear off', 'OFF', ',msgdisappear off')
 		throw false
 	}
