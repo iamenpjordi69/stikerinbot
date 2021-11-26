@@ -12,8 +12,8 @@ let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
     if (args[0] === undefined) {
 		await conn.send2Button(m.chat, ` Turn ON/OFF Disappearing Message
 \nExample:
-.${command} on
-.${command} off
+.msgdisappear on
+.msgdisappear off
 	`.trim(), '© MilfBOT', 'ON', ',msgdisappear on', 'OFF', ',msgdisappear off')
 		throw false
 	}
