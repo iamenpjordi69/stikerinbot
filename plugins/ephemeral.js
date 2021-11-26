@@ -17,11 +17,13 @@ let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
 	`.trim(), '© MilfBOT', 'ON', ',msgdisappear on', 'OFF', ',msgdisappear off')
 		throw false
 	}
+    if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
+	
     if (args[0] == 'on') await conn.toggleDisappearingMessages(
         m.chat,
         7 * 24 * 60 * 60
     )
-    else if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
+    //if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
 }
 handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
