@@ -7,7 +7,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
   let q = m.quoted ? m.quoted : m
   let mime = (m.quoted ? m.quoted : m.msg).mimetype || ''
   if (!/video|audio/.test(mime)) throw `Reply to the music you want to find with a caption *${usedPrefix + command}*`
- m.reply('Wait,Looking For....')
+ m.reply('Wait,Looking for it....⌛')
 				const bodyForm = new FormData()
 			        bodyForm.append('audio', await q.download(), 'music.mp3')
            			bodyForm.append('apikey', 'apivinz')
@@ -20,7 +20,7 @@ let handler = async (m, { conn, usedPrefix, command }) => {
                 		data: bodyForm
             			})
                 		.then(({data}) =>{
-				  m.reply(`*Song Found!*\n\n*Title* : ${data.data.title}\n*Artist* : ${data.data.artists}\n*Genre* : ${data.data.genre}\n*Album* : ${data.data.album}\n*Release* : ${data.data.release_date}`)
+				  m.reply(`*Song Found!🥳🥳🥳*\n\n*Title* : ${data.data.title}\n*Artist* : ${data.data.artists}\n*Genre* : ${data.data.genre}\n*Album* : ${data.data.album}\n*Release* : ${data.data.release_date}`)
 				}).catch(() => {
 				m.reply('Song Not Found!')
 				})
