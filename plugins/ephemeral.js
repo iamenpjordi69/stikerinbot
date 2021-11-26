@@ -26,9 +26,9 @@ ${usedPrefix + command} off
 	`.trim(), '© MilfBOT', 'ON', ',ephe 1', 'OFF', ',ephe 0')
 		throw false
 	}
-    if (args[0] == '0') await conn.toggleDisappearingMessages(m.chat, 0)
+    if (isClose == '0') await conn.toggleDisappearingMessages(m.chat, isClose)
 	
-    if (args[0] == 'on') await conn.toggleDisappearingMessages(
+    if (isClose == '1') await conn.toggleDisappearingMessages(
         m.chat,
         7 * 24 * 60 * 60
     )
