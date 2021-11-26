@@ -14,12 +14,12 @@ handler.all = async function (m, { isPrems }) {
     let url = m.text.split(/\n| /i)[0]
 
     if (/^.*tiktok/i.test(m.text)) {
-        let res = await fetch(API('hardianto', '/api/download/tiktok', { url }, 'apikey'))
+        let res = await fetch(API('rey', '/api/download/tiktok', { url }, 'apikey'))
         if (!res.ok) return m.reply(eror)
         let json = await res.json()
         await m.reply(wait)
         // m.reply(util.format(json))
-        await this.sendFile(m.chat, json.nowm, '', '© MilfBOT', m)
+        await this.sendFile(m.chat, json.result.nowatermark, '', '© MilfBOT', m)
     }
 
     if (/^.*cocofun/i.test(m.text)) {
