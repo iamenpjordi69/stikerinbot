@@ -9,15 +9,24 @@ let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, 
             throw false
         }
     }
-    if (args[0] === undefined) {
-		await conn.send2Button(m.chat, ` Turn ON/OFF Disappearing Message
+    let isClose = {
+		'open': false,
+		'buka': false,
+		'on': false,
+		'1': false,
+		'close': true,
+		'tutup': true,
+		'off': true,
+		'0': true,
+	}[(args[0] || '')]
+	if (isClose === undefined) {`
 \nExample:
 ${usedPrefix + command} on
 ${usedPrefix + command} off
-	`.trim(), '© MilfBOT', 'ON', ',msgdisappear on', 'OFF', ',msgdisappear off')
+	`.trim(), '© MilfBOT', 'ON', ',ephe 1', 'OFF', ',ephe 0')
 		throw false
 	}
-    if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
+    if (args[0] == '0') await conn.toggleDisappearingMessages(m.chat, 0)
 	
     if (args[0] == 'on') await conn.toggleDisappearingMessages(
         m.chat,
@@ -28,6 +37,6 @@ ${usedPrefix + command} off
 handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
 handler.admin = true
-handler.command = /^(msgdisappear)$/i
+handler.command = /^(msgdisappear|ephe)$/i
 
 module.exports = handler
