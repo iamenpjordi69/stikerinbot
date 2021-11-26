@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, 
 \nExample:
 ${usedPrefix + command} on
 ${usedPrefix + command} off
-	`.trim(), '© MilfBOT', 'ON', ',msgdisappear on', 'OFF', ',msgdisappear off')
+	`.trim(), '© MilfBOT', 'ON', '.msgdisappear on', 'OFF', '.msgdisappear off')
 		throw false
 	}
      	await conn.toggleDisappearingMessages(m.chat, isClose)
