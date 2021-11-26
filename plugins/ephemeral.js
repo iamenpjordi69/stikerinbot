@@ -1,14 +1,16 @@
-let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, isOwner }) => {
-    if (m.isGroup) {
-        if (!isBotAdmin) {
-            global.dfail('botAdmin', m, conn)
-            throw false
-        }
-        if (!(isAdmin || isOwner)) {
-            global.dfail('admin', m, conn)
-            throw false
-        }
-    }
+//let handler = async (m, { conn, args, usedPrefix, command, isBotAdmin, isAdmin, isOwner }) => {
+//    if (m.isGroup) {
+//        if (!isBotAdmin) {
+//           global.dfail('botAdmin', m, conn)
+//            throw false
+//        }
+//        if (!(isAdmin || isOwner)) {
+//            global.dfail('admin', m, conn)
+//            throw false
+//        }
+//    }
+let { GroupSettingChange } = require('@adiwajshing/baileys')
+let handler = async (m, { conn, args, usedPrefix, command }) => {
     let isClose = {
 		'close': 0,
 		'off': 0,
@@ -30,6 +32,8 @@ ${usedPrefix + command} off
 handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
 handler.admin = true
+handler.group = true
+handler.botAdmin = true
 handler.command = /^(msgdisappear)$/i
 
 module.exports = handler
