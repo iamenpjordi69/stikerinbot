@@ -20,7 +20,7 @@ ${usedPrefix + command} open
 	}
 	await conn.groupSettingChange(m.chat, GroupSettingChange.messageSend, isClose)
 }
-handler.help = ['grup <open/close>']
+handler.help = ['group <open/close>']
 handler.tags = ['group']
 handler.command = /^(gro?up)$/i
 handler.owner = false
