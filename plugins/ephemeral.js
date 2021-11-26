@@ -21,7 +21,7 @@ let handler = async (m, { conn, args, isBotAdmin, isAdmin, isOwner }) => {
         m.chat,
         7 * 24 * 60 * 60
     )
-    else await conn.toggleDisappearingMessages(m.chat, 0)
+    if (args[0] == 'off') await conn.toggleDisappearingMessages(m.chat, 0)
 }
 handler.help = ['msgdisappear [on]']
 handler.tags = ['tools']
