@@ -27,7 +27,7 @@ Successfully Registered!
 save/star this message because SN (Serial Number) is used for re-registration
 `.trim())
 }
-handler.help = ['daftar', 'reg', 'register'].map(v => v + ' <name>.<age>')
+handler.help = ['reg', 'register'].map(v => v + ' <name>.<age>')
 handler.tags = ['xp']
 
 handler.command = /^(daftar|reg(ister)?)$/i
