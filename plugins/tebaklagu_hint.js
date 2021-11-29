@@ -4,8 +4,8 @@ let handler = async (m, { conn }) => {
     if (!(id in conn.tebaklagu)) throw false
     let json = conn.tebaklagu[id][1]
     let clue = json.judul.replace(/[AIUEOaiueo]/g, '_')
-    conn.reply(m.chat, '```' + clue + '```\nBalas soalnya, bukan pesan ini atau audionya', conn.tebaklagu[id][0])
+    conn.reply(m.chat, '```' + clue + '```\nReply to the question, not this message or the audio', conn.tebaklagu[id][0])
 }
-handler.command = /^cek$/i
+handler.command = /^check$/i
 handler.limit = true
 module.exports = handler
