@@ -3,7 +3,7 @@ const threshold = 0.72
 let handler = m => m
 handler.before = async function (m) {
     let id = m.chat
-    if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/TEBAK JUDUL LAGU/i.test(m.quoted.text)) return !0
+    if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/GUESS THE SONG TITLE/i.test(m.quoted.text)) return !0
     this.tebaklagu = this.tebaklagu ? this.tebaklagu : {}
     if (!(id in this.tebaklagu)) return m.reply('Guess the Song game has ended')
     if (m.quoted.id == this.tebaklagu[id][0].id) {
