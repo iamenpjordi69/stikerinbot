@@ -33,6 +33,6 @@ Bonus: ${poin} XP
 }
 handler.help = ['guessthesong']
 handler.tags = ['game']
-handler.command = /^(guessthesong|gts)$/i
+handler.command = /^(guessthesong)$/i
 
 module.exports = handler
