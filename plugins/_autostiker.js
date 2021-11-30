@@ -8,7 +8,7 @@ handler.before = async function (m) {
     let user = global.db.data.users[m.sender]
     if (chat.stiker && !user.banned && !chat.isBanned && !m.fromMe && !m.isBaileys) {
         // try {
-        if (/^.*s(tic?ker)?(gif)?$/i.test(m.text)) return
+        if (/^.*s(tic?ker)?(gif)?(wm)?$/i.test(m.text)) return
         let q = m
         let stiker = false
         let wsf = false
@@ -23,7 +23,7 @@ handler.before = async function (m) {
                 crop: false,
             })
         } else if (/video/.test(mime)) {
-            if ((q.msg || q).seconds > 11) return m.reply('Maximum 10sec video can be converted into sticker!')
+            if ((q.msg || q).seconds > 11) return m.reply('Maximum 10s video can be converted to sticker!')
             let img = await q.download()
             if (!img) return
             wsf = new WSF.Sticker(img, {
@@ -56,5 +56,5 @@ handler.before = async function (m) {
 module.exports = handler
 
 const isUrl = (text) => {
-    return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/, 'gi'))
+    return text.match(new RegExp(/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)(jpe?g|gif|png)/, 'gi'))
 }
