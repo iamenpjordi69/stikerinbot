@@ -85,6 +85,7 @@ module.exports = {
           if (!('antiLink' in chat)) chat.antiLink = false
           if (!isNumber(chat.expired)) chat.expired = 0
           if (!('antiBadword' in chat)) chat.antiBadword = true
+          if (!('getmsg' in chat)) chat.getmsg = false
           if (!('viewonce' in chat)) chat.viewonce = true
         } else global.db.data.chats[m.chat] = {
           isBanned: false,
@@ -100,6 +101,7 @@ module.exports = {
           antiLink: false,
           expired: 0,
           antiBadword: true,
+          getmsg: false,
           viewonce: true,
         }
 
@@ -110,22 +112,28 @@ module.exports = {
           if (!'anticall' in settings) settings.anticall = true
           if (!'antispam' in settings) settings.antispam = true
           if (!'antitroli' in settings) settings.antitroli = true
+          if (!'autoupdatestatus' in settings) settings.autoupdatestatus = false
           if (!'backup' in settings) settings.backup = false
-          if (!isNumber(settings.backupDB)) settings.backupDB = 0
-          if (!'groupOnly' in settings) settings.groupOnly = false
-          if (!'jadibot' in settings) settings.groupOnly = false
+          if (!'buggc' in settings) settings.buggc = true
+          if (!isNumber(settings.backupTime)) settings.backupTime = 0
+          if (!'group' in settings) settings.group = false
+          if (!'jadibot' in settings) settings.jadibot = false
           if (!'nsfw' in settings) settings.nsfw = true
+          if (!'restrict' in settings) settings.restrict = false
           if (!isNumber(settings.status)) settings.status = 0
         } else global.db.data.settings[this.user.jid] = {
           anon: true,
           anticall: true,
           antispam: true,
           antitroli: true,
+          autoupdatestatus: false,
           backup: false,
-          backupDB: 0,
-          groupOnly: false,
+          buggc: true,
+          backupTime: 0,
+          group: false,
           jadibot: false,
           nsfw: true,
+          restrict: false,
           status: 0,
         }
       } catch (e) {
@@ -276,7 +284,7 @@ module.exports = {
 
           m.isCommand = true
           let xp = 'exp' in plugin ? parseInt(plugin.exp) : 17 // Pendapatkan XP per Command
-          if (xp > 200) m.reply('Squeak -_-') // Hehehe
+          if (xp > 200) m.reply('Ngecit -_-') // Hehehe
           else m.exp += xp
           if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
             this.reply(m.chat, `Your limit is up, please buy through *${usedPrefix}buy*`, m)
@@ -392,7 +400,7 @@ module.exports = {
               ppgc = await uploadImage(await (await fetch(await this.getProfilePicture(jid))).buffer())
             } catch (e) {
             } finally {
-              text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Welcome, @user!').replace('@subject', this.getName(jid)).replace('@desc', groupMetadata.desc ? String.fromCharCode(8206).repeat(4001) + groupMetadata.desc : '') :
+              text = (action === 'add' ? (chat.sWelcome || this.welcome || conn.welcome || 'Selamat datang, @user!').replace('@subject', this.getName(jid)).replace('@desc', groupMetadata.desc ? String.fromCharCode(8206).repeat(4001) + groupMetadata.desc : '') :
                 (chat.sBye || this.bye || conn.bye || 'See you later, @user!')).replace(/@user/g, '@' + user.split`@`[0])
               let wel = await new knights.Welcome()
                 .setUsername(this.getName(user))
@@ -441,7 +449,7 @@ module.exports = {
 Detected @${m.participant.split`@`[0]} has deleted a message
 
 Type *.on delete* to turn off this message
-`.trim(), '', 'Turn OFF Antidelete', ',on delete', m.message, {
+`.trim(), '', 'Turn off Antidelete', ',on delete', m.message, {
       contextInfo: {
         mentionedJid: [m.participant]
       }
@@ -453,7 +461,7 @@ Type *.on delete* to turn off this message
     let users = global.db.data.users
     let user = users[from] || {}
     if (user.whitelist) return
-    if (!db.data.settings.anticall) return
+    if (!db.data.settings[this.user.jid].anticall) return
     switch (this.callWhitelistMode) {
       case 'mycontact':
         if (from in this.contacts && 'short' in this.contacts[from])
@@ -461,8 +469,8 @@ Type *.on delete* to turn off this message
         break
     }
     user.call += 1
-    await this.reply(from, `If you call more than 5 times, you will be blocked.\n\n${user.call} / 5`, null)
-    if (user.call == 5) {
+    await this.reply(from, `If you call more than 5 times, you will be blocked.\n\n${user.call} / 3`, null)
+    if (user.call > 3) {
       await this.blockUser(from, 'add')
       user.call = 0
     }
