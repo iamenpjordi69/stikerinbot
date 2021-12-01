@@ -1,3 +1,4 @@
+let fetch = require("node-fetch")
 let handler = async (m, { conn, command }) => {
   if (!db.data.settings.nsfw) throw "NSFW mode is *OFF*";
   m.reply('Loading...')
