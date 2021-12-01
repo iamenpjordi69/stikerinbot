@@ -8,7 +8,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
   if (!res.ok) throw `${res.status} ${res.statusText}`;
   let json = await res.json();
   let pokedex = `
-Name: ${json.name}
+*Name:* ${json.name}
 Id: ${json.id}
 Type: ${json.type}
 Species: ${json.species}
@@ -18,7 +18,7 @@ Weight: ${json.weight}
 Base experience: ${json.base_experience}
 Gender: ${json.gender}
 Egg groups: ${json.egg_groups}\n
-/nSTATS
+*STATS*
 Hp: ${json.stats.hp}
 Attack: ${json.stats.attack}
 Defense: ${json.stats.defense}
@@ -26,10 +26,10 @@ Sp atk: ${json.stats.sp_atk}
 Sp def: ${json.stats.sp_def}
 Speed: ${json.stats.speed}
 Total: ${json.stats.total}\n
-/nFAMILY
+*FAMILY*
 Evolution Stage: ${json.family.evolutionStage}
 Evolution Line: ${json.family.evolutionLine}\n
-DESCRIPTION
+*DESCRIPTION*
 ${json.description}
 Generation: ${json.generation}\n\n
 ~milfbot
