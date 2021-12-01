@@ -6,7 +6,7 @@ let handler = async (m, { conn, command }) => {
 }
 handler.help = ["ass", "bdsm", "blowjob", "cuckold", "cum", "ero", "femdom", "foot", "gangbang", "glasses", "hentai", "jahy", "masturbation", "orgy", "panties", "pussy", "tentacles", "thighs", "yuri", "zettai"]
 handler.tags = ['anime']
-
+handler.nsfw = true
 handler.command = /^(ass|bdsm|blowjob|cuckold|cum|ero|femdom|foot|gangbang|glasses|hentai|jahy|masturbation|orgy|panties|pussy|tentacles|thighs|yuri|zettai)$/i
 
 module.exports = handler
