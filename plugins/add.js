@@ -1,6 +1,7 @@
 let fetch = require('node-fetch')
+
 let handler = async (m, { conn, text, participants, usedPrefix, command }) => {
-  if (!text) throw `uhm.. Send a number to add in this group?\nExample:\n\n${usedPrefix + command + ' ' + global.owner[0]}`
+  if (!text) throw `uhm.. Send a number to add.\nSupported formats:\n91XXXXXXXXXX\n+91XXXXXXXXXX\n+91 XXXXX XXXXX\n\nExample:\n\n${usedPrefix + command + ' ' + global.owner[0]}`
   let _participants = participants.map(user => user.jid)
   let users = (await Promise.all(
     text.split(',')
@@ -12,7 +13,7 @@ let handler = async (m, { conn, text, participants, usedPrefix, command }) => {
       ])
   )).filter(v => v[1]).map(v => v[0] + '@c.us')
   let response = await conn.groupAdd(m.chat, users)
-  if (response[users] == 408) throw `_Failed!_\n\nThe number has been left out recently\nCan only join via *${usedPrefix}link* group`
+  if (response[users] == 408) throw `_Failed!_\n\nThe number cannot be added as left the group recently\nCan only be invited in via *${usedPrefix}link* group`
   let pp = await conn.getProfilePicture(m.chat).catch(_ => false)
   let jpegThumbnail = pp ? await (await fetch(pp)).buffer() : false
   for (let user of response.participants.filter(user => Object.values(user)[0].code == 403)) {
@@ -20,7 +21,7 @@ let handler = async (m, { conn, text, participants, usedPrefix, command }) => {
       invite_code,
       invite_code_exp
     }]] = Object.entries(user)
-    let teks = `Inviting @${jid.split`@`[0]} using invite...`
+    let teks = `Inviting @${jid.split`@`[0]} using personal group invitation...`
     m.reply(teks, null, {
       contextInfo: {
         mentionedJid: conn.parseMention(teks)
@@ -31,20 +32,13 @@ let handler = async (m, { conn, text, participants, usedPrefix, command }) => {
     } : {})
   }
 }
-handler.help = ['add'].map(v => v + 'number, number')
+handler.help = ['add'].map(v => v + ' nomor,nomor')
 handler.tags = ['admin']
 handler.command = /^(add)$/i
-handler.owner = false
-handler.mods = false
-handler.premium = false
-handler.group = true
-handler.private = false
 
+handler.group = true
 handler.admin = true
 handler.botAdmin = true
-
-handler.fail = null
 handler.limit = true
 
 module.exports = handler
-
