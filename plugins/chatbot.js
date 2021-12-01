@@ -7,7 +7,6 @@ let handler = async (m, { text }) => {
   }))
   if (!res.ok) throw await res.text()
   let json = await res.json()
-  if (!json.thumbnail.genius) throw json
   conn.reply(m.chat, `*${json.response}* `, m)
 }
 handler.help = ['chatbot'].map(v => v + ' <text>')
