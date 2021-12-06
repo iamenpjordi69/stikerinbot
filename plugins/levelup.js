@@ -1,9 +1,10 @@
+let fetch = require('node-fetch')
 let levelling = require('../lib/levelling')
-const canvacord = require('canvacord')
 
 let handler = async (m, { conn, usedPrefix }) => {
-  let pp = './src/avatar_contact.png'
+  // let pp = './src/avatar_contact.png'
   let who = m.sender
+  let name = conn.getName(m.sender)
   let discriminator = who.substring(9, 13)
   try {
     pp = await conn.getProfilePicture(who)
@@ -17,36 +18,18 @@ let handler = async (m, { conn, usedPrefix }) => {
     let usersLevel = sortedLevel.map(enumGetKey)
     let { min, xp, max } = levelling.xpRange(user.level, global.multiplier)
     if (!levelling.canLevelUp(user.level, user.exp, global.multiplier)) {
-      let rank = await new canvacord.Rank()
-        .setRank(usersLevel.indexOf(m.sender) + 1)
-        .setAvatar(pp)
-        .setLevel(user.level)
-        .setCurrentXP(user.exp - min)
-        .setRequiredXP(xp)
-        .setProgressBar("#f2aa4c", "COLOR")
-        .setUsername(conn.getName(who))
-        .setDiscriminator(discriminator)
-      rank.build()
-        .then(async data => {
-          await conn.sendButtonImg(m.chat, data, `Level *${user.level} (${user.exp - min}/${xp})*\nNot enough *${max - user.exp}* again!`.trim(), '© MilfBOT', 'Auto Level Up', `${usedPrefix}on autolevelup`, m, { thumbnail: data, height: 282, width: 934 })
-        })
+      let rank = 'https://telegra.ph/file/8419b02d5d285ee39375f.jpg'
+        {
+          await conn.sendButtonLoc(m.chat, await (await fetch(rank)).buffer(), `Level ${name} ${user.level} (${user.exp - min}/${xp})\nKurang ${max - user.exp} lagi!`.trim(), '© XyZ666x', 'Enable autolevelup', `${usedPrefix}on autolevelup`, m)
+        }
     }
     let before = user.level * 1
     while (levelling.canLevelUp(user.level, user.exp, global.multiplier)) user.level++
     if (before !== user.level) {
-      let rank = await new canvacord.Rank()
-        .setRank(usersLevel.indexOf(m.sender) + 1)
-        .setAvatar(pp)
-        .setLevel(user.level)
-        .setCurrentXP(user.exp - min)
-        .setRequiredXP(xp)
-        .setProgressBar("#f2aa4c", "COLOR")
-        .setUsername(conn.getName(who))
-        .setDiscriminator(discriminator)
-      rank.build()
-        .then(async data => {
-          await conn.sendButtonImg(m.chat, data, `_*Level Up!*_\n_${before}_ -> _${user.level}_`.trim(), '© MilfBOT', 'Auto Level Up', `${usedPrefix}on autolevelup`, m, { thumbnail: data, height: 282, width: 934 })
-        })
+      let rank = 'https://telegra.ph/file/2b16c0185469c29a0d692.jpg'
+        {
+          await conn.sendButtonLoc(m.chat, await (await fetch(rank)).buffer(), `${name} Level Up!\n_${before}_ -> ${user.level}`.trim(), '© XyZ666x', 'AUTO LEVEL UP', `${usedPrefix}on autolevelup`, m)
+        }
     }
   }
 }
