@@ -36,7 +36,7 @@ handler.before = async function (m) {
                                 .setDiscriminator(discriminator);
                         rank.build()
                                 .then(async data => {
-                                        await this.sendButtonImg(m.chat, data, `_*Level Up!*_\n_${before}_ -> _${user.level}_`.trim(), '© MilfBOT', 'Daily', ',daily')
+                                        await this.sendButtonImg(m.chat, data, `@${who.split`@`[0]} Level Up!\n_${before}_ -> ${user.level}`.trim(), watermark, 'Profile', ',profile', m, { contextInfo: { mentionedJid: [who]}})
                                 })
                 }
         }
