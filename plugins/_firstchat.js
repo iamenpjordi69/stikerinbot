@@ -10,7 +10,7 @@ handler.all = async function (m, { isBlocked }) {
     await this.sendButton(m.chat, `
 Hi, ${ucapan()}
 
-${user.banned ? 'You are Banned' : `Can Anyone help ${this.user.name} ?`}
+${user.banned ? 'You are Banned' : `How can ${this.user.name} help You ?`}
 `.trim(), '© MilfBOT', user.banned ? 'Bot Owner' : 'Menu', user.banned ? ',owner' : ',?', m)
     user.pc = new Date * 1
 }
