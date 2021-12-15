@@ -21,11 +21,9 @@ handler.before = async function (m) {
 @${room.p2.split`@`[0]}
 
 Please choose a suit in the respective chat
-Click on respective links to choose:
+Please go back and check DM. Select from there
 
-Rock🗿 = wa.me/${conn.user.jid.split`@`[0]}?text=rock
-Paper📄 = wa.me/${conn.user.jid.split`@`[0]}?text=paper
-Scissor✂️ = wa.me/${conn.user.jid.split`@`[0]}?text=scissor
+Rock🗿 Paper📄 Scissor✂️ 
 `, m.chat, {
         contextInfo: {
           mentionedJid: [room.p, room.p2]
