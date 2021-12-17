@@ -21,7 +21,7 @@ handler.before = async function (m) {
 @${room.p2.split`@`[0]}
 
 Please choose a suit in the respective chat
-Please go back and check DM. Select from there
+Please *GO BACK* and *CHECK DM*. Select from there
 
 Rock🗿 Paper📄 Scissor✂️ 
 `, m.chat, {
