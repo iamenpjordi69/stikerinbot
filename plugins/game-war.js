@@ -21,8 +21,8 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
 
 *❏  C O M M A N D S*
 *${usedPrefix + command} join A/B* = join game
-*${usedPrefix + command} left* = left game
-*${usedPrefix + command} money 10xx* = bet monet
+*${usedPrefix + command} left* = leave game
+*${usedPrefix + command} money 10xx* = bet money
 *${usedPrefix + command} player* = player game
 *${usedPrefix + command} start* = start game`)
 
