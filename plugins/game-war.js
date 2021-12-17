@@ -11,42 +11,42 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
 
   if (!args[0] || args[0] == "help") return m.reply(`*❏  W A R - Z O N E*
 
-[1] War Zone adalah game perang dengan sistem _turn attack_ atau menyerang secara bergiliran
-[2] Permainan dapat dimulai dengan 1v1 sampai dengan 5v5
-[3] Modal perang adalah harta rampasan perang jika tim kamu menang
-[4] Setiap pemain akan mendapatkan 5000 HP (Health Point)
-[5] Keberhasilan menyerang tergantung level kamu dengan level musuh yang akan diserang
-[6] Kesempatan menyerang adalah 40 detik, lebih dari itu dianggap AFK (pengurangan 2500 HP)
-[7] Sebuah tim akan menang jika tim lawan kalah semua (HP <= 0) dan mendapatkan harta rampasan perang
+[1] War Zone is a war game with a turn attack system or take turns
+[2] The game can start with 1v1 up to 5v5
+[3] War capital is the spoils of war if your team wins
+[4] Each player will get 5000 HP (Health Point)
+[5] The success of the attack depends on your level with the level of the enemy to be attacked
+[6] Attack chance is 40 seconds, more than that is considered AFK (2500 HP reduction)
+[7] A team will win if the opposing team loses all (HP <= 0) and gets the spoils of war
 
 *❏  C O M M A N D S*
 *${usedPrefix + command} join A/B* = join game
 *${usedPrefix + command} left* = left game
-*${usedPrefix + command} money 10xx* = uang taruhan
+*${usedPrefix + command} money 10xx* = bet monet
 *${usedPrefix + command} player* = player game
 *${usedPrefix + command} start* = start game`)
 
 
   if (args[0] == "money"){
-    if (!(m.chat in conn.war)) return m.reply(`*Silahkan buat room terlebih dahulu (Ketik .war join)*`)
+    if (!(m.chat in conn.war)) return m.reply(`*Please make a room first (Type .war join)*`)
     if(m.sender == conn.war[m.chat][0].user){
       if (args[1] != "undefined" && !isNaN(conn.number(args[1]))){
         args[1] = conn.number(args[1])
-        if (args[1] < 1000000) return m.reply('*Minimal Rp. 1.000.000*')
+        if (args[1] < 1000000) return m.reply('*Minimum Rs. 1.000.000*')
         conn.war2[m.chat].money = args[1]
-        return m.reply("*Berhasil menetapkan modal perang sebesar Rp. " + Number(args[1]).toLocaleString() + "*")
+        return m.reply("*Successfully set a war capital (money) of Rs. " + Number(args[1]).toLocaleString() + "*")
       }else {
-        return m.reply("*Masukkan modal taruhan perang berupa angka (boleh menggunakan titik)*\n\n.war money 100.000.000")
+        return m.reply("*Enter the war bet capital (money) in the form of numbers (can use dot)*\n\n.war money 100.000.000")
       }
     }else {
-      return conn.reply(m.chat,`*Hanya @${conn.war[m.chat][0].user.split('@')[0]} sebagai pembuat room yang bisa mengganti modal awal perang*`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
+      return conn.reply(m.chat,`*Only @${conn.war[m.chat][0].user.split('@')[0]} as a room maker that can replace the initial capital (money) of war*`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
     }
   }
 
   // JOIN
   if (args[0] == "join"){
     
-    if (global.db.data.users[m.sender].money < 10000) return m.reply("*Uang kamu minimal Rp. 10.000 untuk bermain game ini.*")
+    if (global.db.data.users[m.sender].money < 10000) return m.reply("*You need atleast Rs. 10,000  money to play this game.*")
     // FIRST PLAYER
     if (!(m.chat in conn.war)) {
       conn.war2[m.chat] = {"war" : false, "turn" : 0, "time" : 0, "money" : 0}
@@ -56,11 +56,11 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
       for (i=1;i<10;i++){
         conn.war[m.chat][i] = {"user": "", "hp" : 0, "lvl" : 0, "turn" : false}
       }
-      return m.reply(`*Berhasil masuk ke dalam game sebagai Team A*\n\n*.war join a/b* = join game\n*.war start* = mulai game`)
+      return m.reply(`*Successfully entered the game as Team A*\n\n*.war join a/b* = join game\n*.war start* = start game`)
     }else {   // NOT FIRST PLAYER
       // IF FULL
       if (conn.war2[m.chat].war) {
-        return m.reply(`*Permainan sudah dimulai, tidak bisa join.*`)
+        return m.reply(`*The game has started already, can't join.*`)
       }
       // IF YOU ALREADY JOIN THE GAME
       for (i = 0 ; i < conn.war[m.chat].length ; i++) {
@@ -71,16 +71,16 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
               total += 1
             }
           }
-          return m.reply(`*Anda sudah masuk ke dalam game*\n\n*.war join a/b* = join game\n*.war start* = mulai game`)
+          return m.reply(`*You have entered the game*\n\n*.war join a/b* = join game\n*.war start* = start game`)
         }
       }
       
       // JOIN MILIH TIM
       if (args[1]){
         if (args[1].toLowerCase() == "a"){
-          if (conn.war2[m.chat].money == 0) return conn.reply(m.chat,`*Tolong @${conn.war[m.chat][0].user.split('@')[0]} tetapkan modal awal perang (minimal Rp. 1.000.000)*\n\n.war money 1.000.000`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
+          if (conn.war2[m.chat].money == 0) return conn.reply(m.chat,`*Please @${conn.war[m.chat][0].user.split('@')[0]} set the initial capital (money) of the war (minimal Rs 1.000.000)*\n\n.war money 1.000.000`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
           return m.reply('a')
-          if (global.db.data.users[m.sender].money < conn.war2[m.chat].money) return m.reply(`*Uang kamu minimal Rp. ${conn.war2[m.chat].money.toLocaleString()} untuk bermain game ini.*`)
+          if (global.db.data.users[m.sender].money < conn.war2[m.chat].money) return m.reply(`*Your money is minimum Rp. ${conn.war2[m.chat].money.toLocaleString()} than required to play this game.*`)
           for (i = 1 ; i < 5 ; i++) {
             if (conn.war[m.chat][i].user == ""){
               xp = global.db.data.users[m.sender].xp
@@ -91,12 +91,12 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
                   total += 1
                 }
               }
-              return m.reply(`*Berhasil masuk ke dalam game sebagai Team A*\n\n*.war join a/b* = join game\n*.war start* = mulai game`)
+              return m.reply(`*Successfully entered the game as Team A*\n\n*.war join a/b* = join game\n*.war start* = start game`)
             }
           } 
         }else if (args[1].toLowerCase() == "b"){
-          if (conn.war2[m.chat].money == 0) return conn.reply(m.chat,`*Tolong @${conn.war[m.chat][0].user.split('@')[0]} tetapkan modal awal perang (minimal Rp. 1.000.000)*\n\n.war money 1.000.000`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
-          if (global.db.data.users[m.sender].money < conn.war2[m.chat].money) return m.reply(`*Uang kamu minimal Rp. ${conn.war2[m.chat].money.toLocaleString()} untuk bermain game ini.*`)
+          if (conn.war2[m.chat].money == 0) return conn.reply(m.chat,`*Please @${conn.war[m.chat][0].user.split('@')[0]} set the initial capital (money) of the war (minimal Rp. 1.000.000)*\n\n.war money 1.000.000`,m, {contextInfo : {mentionedJid : [conn.war[m.chat][0].user]}})
+          if (global.db.data.users[m.sender].money < conn.war2[m.chat].money) return m.reply(`*Your money is minimum Rp. ${conn.war2[m.chat].money.toLocaleString()} than required to play this game.*`)
           for (i = 5 ; i < 10 ; i++) {
             if (conn.war[m.chat][i].user == ""){
               xp = global.db.data.users[m.sender].xp
@@ -107,15 +107,15 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
                   total += 1
                 }
               }
-              return m.reply(`*Berhasil masuk ke dalam game sebagai Team B*\n\n*.war join a/b* = join game\n*.war start* = mulai game`)
+              return m.reply(`*Successfully entered the game as Team B*\n\n*.war join a/b* = join game\n*.war start* = start game`)
             }
           }
         }else {
-          return m.reply(`*Pilih salah satu tim A atau B*\n\n.war join A\n.war join B`)
+          return m.reply(`*Choose Team A or B*\n\n.war join A\n.war join B`)
         }
       }else {
         // JOIN SESUAI URUTAN
-        return m.reply(`*Pilih salah satu tim A atau B*\n\n.war join A\n.war join B`)
+        return m.reply(`*Choose Team A or B*\n\n.war join A\n.war join B`)
       }
       
 
@@ -134,20 +134,20 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
   if (args[0] == "left"){
     // IF GAME START
     if (conn.war2[m.chat].war) {
-      m.reply(`*Perang sudah dimulai, anda tidak bisa keluar*`)
+      m.reply(`*The war has started, you can't get out*`)
     }else {   // IF NOT
       for (i = 0 ; i < 10 ; i++) {
         if (m.sender == conn.war[m.chat][i].user){
-          return m.reply(`*Berhasil keluar dari game*\n\n*Butuh ${total} user lagi*`)
+          return m.reply(`*Successfully exited the game*\n\n*Need more ${total} users/players*`)
         }
       }
-      return m.reply(`*Kamu tidak sedang berada di dalam game*`)
+      return m.reply(`*You are not in the game*`)
     }
   }
 
   // CEK PLAYER
   if (args[0] == "player"){ 
-    if (!(m.chat in conn.war)) return m.reply(`*Tidak ada pemain yang join room War Zone*`)
+    if (!(m.chat in conn.war)) return m.reply(`*No players have joined the War Zone room*`)
     var teamA = []
     var teamB = []
     var teamAB = []
@@ -160,14 +160,14 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
       teamAB.push(conn.war[m.chat][i].user)
     }
     // return m.reply(teamA[0])
-    conn.reply(m.chat, `${conn.war2[m.chat].war ? '*Giliran : ' + '@' + conn.war[m.chat][conn.war2[m.chat].turn].user.split('@')[0] + '*\n*Taruhan : Rp. ' + Number(conn.war2[m.chat].money).toLocaleString() + '*\n\n' : '*Taruhan : Rp. ' + Number(conn.war2[m.chat].money).toLocaleString() + '*\n\n' }*TEAM A :*\n` + teamA.map((v, i )=> `${conn.war[m.chat][i].hp > 0 ? '❤️ ' : '☠️ ' }@${v.split('@')[0]} (Lv.${conn.war[m.chat][i].lvl} HP: ${conn.war[m.chat][i].hp})`).join`\n` + "\n\n*TEAM B :*\n" + teamB.map((v, i) => `${conn.war[m.chat][i+5].hp > 0 ? '❤️ ' : '☠️ ' }@${v.split('@')[0]} (Lv.${conn.war[m.chat][i+5].lvl} HP: ${conn.war[m.chat][i+5].hp})`).join`\n`,m, {contextInfo: {
+    conn.reply(m.chat, `${conn.war2[m.chat].war ? '*Turn : ' + '@' + conn.war[m.chat][conn.war2[m.chat].turn].user.split('@')[0] + '*\n*Bet : Rp. ' + Number(conn.war2[m.chat].money).toLocaleString() + '*\n\n' : '*Bet : Rp. ' + Number(conn.war2[m.chat].money).toLocaleString() + '*\n\n' }*TEAM A :*\n` + teamA.map((v, i )=> `${conn.war[m.chat][i].hp > 0 ? '❤️ ' : '☠️ ' }@${v.split('@')[0]} (Lv.${conn.war[m.chat][i].lvl} HP: ${conn.war[m.chat][i].hp})`).join`\n` + "\n\n*TEAM B :*\n" + teamB.map((v, i) => `${conn.war[m.chat][i+5].hp > 0 ? '❤️ ' : '☠️ ' }@${v.split('@')[0]} (Lv.${conn.war[m.chat][i+5].lvl} HP: ${conn.war[m.chat][i+5].hp})`).join`\n`,m, {contextInfo: {
       mentionedJid: teamAB
     }})
   }
 
   // START GAME
   if (args[0] == "start"){
-    if (conn.war2[m.chat].war) return m.reply(`*Perang sudah dimulai, tidak bisa join.*`)
+    if (conn.war2[m.chat].war) return m.reply(`*The war has started, you can't join.*`)
     teamA = 0
     teamB = 0
     for (i=0;i<10;i++){
@@ -183,14 +183,14 @@ let handler = async (m, { conn, usedPrefix, args, command }) => {
       for (i=0;i<5;i++){
         if (conn.war[m.chat][i].user != ""){
           user = conn.war[m.chat][i].user
-          return conn.reply(m.chat,`*Permainan berhasil dimulai*\n*Silahkan @${user.split('@')[0]} untuk menyerang musuh*\n\n.war player = statistik pemain\n.attack @tag = serang lawan`, m, {contextInfo: { mentionedJid: [user] }})
+          return conn.reply(m.chat,`*Game started successfully*\n*Please @${user.split('@')[0]} attack the enemy*\n\n.war player = Player stats\n.attack @tag = attack opponent`, m, {contextInfo: { mentionedJid: [user] }})
         }
       }
     }else {
       if (teamA > teamB){
-        m.reply(`*Team B kurang ${teamA-teamB} orang lagi agar permainan adil.*`)
+        m.reply(`*Team B needs ${teamA-teamB} more people for fair play.*`)
       }else {
-        m.reply(`*Team A kurang ${teamB-teamA} orang lagi agar permainan adil.*`)
+        m.reply(`*Team A needs ${teamB-teamA} more people for fair play.*`)
       }
     }
   }
