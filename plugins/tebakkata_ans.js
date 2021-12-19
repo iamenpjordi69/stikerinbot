@@ -3,19 +3,19 @@ const threshold = 0.72
 let handler = m => m
 handler.before = async function (m) {
     let id = m.chat
-    if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/Ketik.*teka/i.test(m.quoted.contentText)) return !0
+    if (!m.quoted || !m.quoted.fromMe || !m.quoted.isBaileys || !/Type.*teka/i.test(m.quoted.contentText)) return !0
     this.tebakkata = this.tebakkata ? this.tebakkata : {}
-    if (!(id in this.tebakkata)) return m.reply('Soal itu telah berakhir')
+    if (!(id in this.tebakkata)) return m.reply('The matter has ended')
     if (m.quoted.id == this.tebakkata[id][0].id) {
         let json = JSON.parse(JSON.stringify(this.tebakkata[id][1]))
-        if (['.teka', 'Bantuan', ''].includes(m.text)) return !0
-        if (m.text.toLowerCase() == json.jawaban.toLowerCase().trim()) {
+        if (['.teka', 'HINT', ''].includes(m.text)) return !0
+        if (m.text.toLowerCase() == json.answer.toLowerCase().trim()) {
             global.db.data.users[m.sender].exp += this.tebakkata[id][2]
-            await this.sendButton(m.chat, `*Benar!* +${this.tebakkata[id][2]} XP`, '© stikerin', 'Tebak Kata', '.tebakkata', m)
+            await this.sendButton(m.chat, `*Correct Answer ✅!* \n\n +${this.tebakkata[id][2]} XP`, '© MilfBOT', 'Guess the Word', '.guesstheword', m)
             clearTimeout(this.tebakkata[id][3])
             delete this.tebakkata[id]
-        } else if (similarity(m.text.toLowerCase(), json.jawaban.toLowerCase().trim()) >= threshold) m.reply(`*Dikit Lagi!*`)
-        else m.reply(`*Salah!*`)
+        } else if (similarity(m.text.toLowerCase(), json.answer.toLowerCase().trim()) >= threshold) m.reply(`*You are close, a little more!*`)
+        else m.reply(`*Wrong Answer ❌!*`)
     }
     return !0
 }
